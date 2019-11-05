@@ -1,0 +1,447 @@
+{
+  "users": [
+    {
+      "enabled": false,
+      "id_type": "xren",
+      "del_sign": true,
+      "id_value": "irure ut ullamco consectetur",
+      "etalon_id": "veniam",
+      "ext_upd_date": "1942-07-30T22:46:01.334Z",
+      "temporary_id": "aliquip est veniam laborum reprehenderit",
+      "last_update_dt": "1986-12-27T04:43:03.290Z",
+      "is_confirmed_offline": false
+    },
+    {
+      "enabled": true,
+      "id_type": "sso_id",
+      "del_sign": true,
+      "id_value": "aute",
+      "etalon_id": "dolore",
+      "ext_upd_date": "1990-12-01T04:37:49.084Z",
+      "temporary_id": "exercitation veniam ut occaec",
+      "last_update_dt": "1955-12-12T16:48:38.628Z",
+      "is_confirmed_offline": false
+    },
+    {
+      "enabled": false,
+      "id_type": "sso",
+      "del_sign": true,
+      "id_value": "eu nulla labore minim",
+      "etalon_id": "eiusmod est",
+      "ext_upd_date": "1964-04-10T08:54:11.408Z",
+      "temporary_id": "proident qui",
+      "last_update_dt": "2008-12-18T04:19:19.341Z",
+      "is_confirmed_offline": true
+    },
+    {
+      "enabled": true,
+      "id_type": "SSO",
+      "del_sign": false,
+      "id_value": "est",
+      "etalon_id": "eiusmod",
+      "ext_upd_date": "1991-08-07T21:35:33.740Z",
+      "temporary_id": "veniam",
+      "last_update_dt": "1976-08-30T11:08:08.825Z",
+      "is_confirmed_offline": true
+    },
+    {
+      "enabled": true,
+      "id_type": "xren",
+      "del_sign": false,
+      "id_value": "ex non eu",
+      "etalon_id": "cillum adipisicing Lorem",
+      "ext_upd_date": "1999-07-12T13:23:14.040Z",
+      "temporary_id": "nulla ea deserunt",
+      "last_update_dt": "1989-09-01T09:35:37.822Z",
+      "is_confirmed_offline": false
+    }
+  ],
+  "gkupays": [
+    {
+      "epd": "occaecat et dolor",
+      "phone": "culpa aliquip commodo et laborum",
+      "del_sign": false,
+      "mesmeter": "co",
+      "etalon_id": "ipsum magna ut id in",
+      "mesaccount": "consequat fugiat id commodo in",
+      "epd_comment": "voluptate ut tempor",
+      "chronicle_id": "culpa",
+      "temporary_id": "et pariatur dolore in",
+      "last_update_dt": "1988-05-21T14:00:47.065Z",
+      "entity_active_ind": false,
+      "gkupay_address_rel": "L"
+    },
+    {
+      "epd": "et Excepteur aute exercitation fugiat",
+      "phone": "id do officia nostru",
+      "del_sign": false,
+      "mesmeter": "adipisicing",
+      "etalon_id": "nostrud in sit",
+      "mesaccount": "adipisicing proident irure Ut",
+      "epd_comment": "officia",
+      "chronicle_id": "anim irure sed",
+      "temporary_id": "est Lorem",
+      "last_update_dt": "2013-01-10T23:37:54.506Z",
+      "entity_active_ind": false,
+      "gkupay_address_rel": "eiusmod tempor adipisici"
+    },
+    {
+      "epd": "cillum occaecat aliquip nostrud",
+      "phone": "laboris ipsum Ut quis",
+      "del_sign": true,
+      "mesmeter": "incididunt in sed nostrud",
+      "etalon_id": "consectetur dolor",
+      "mesaccount": "aute velit labore tempor",
+      "epd_comment": "tempor veniam in Ut amet",
+      "chronicle_id": "ipsum ut deserunt",
+      "temporary_id": "et veniam",
+      "last_update_dt": "1975-10-06T03:55:16.662Z",
+      "entity_active_ind": false,
+      "gkupay_address_rel": "non pariatur consectetur do"
+    },
+    {
+      "epd": "dolore pariatur incididunt irure et",
+      "phone": "dolor cillum",
+      "del_sign": false,
+      "mesmeter": "sit cupidatat laborum culpa repr",
+      "etalon_id": "sint esse culpa",
+      "mesaccount": "ipsum",
+      "epd_comment": "elit et",
+      "chronicle_id": "magna elit consequat minim Duis",
+      "temporary_id": "enim tempor deserunt eu",
+      "last_update_dt": "1984-12-05T04:43:33.615Z",
+      "entity_active_ind": true,
+      "gkupay_address_rel": "in dolore"
+    }
+  ],
+  "pending": false,
+  "birth_dt": "1999-01-18T10:06:31.551Z",
+  "contacts": [
+    {
+      "ref_num": "amet",
+      "del_sign": true,
+      "etalon_id": "adipisicing nulla",
+      "external_id": "fugiat minim nisi Ut D",
+      "temporary_id": "sunt irure laborum in dolor",
+      "last_update_dt": "1960-12-21T20:41:27.500Z",
+      "cont_meth_cat_cd": "3"
+    },
+    {
+      "ref_num": "culpa tempo",
+      "del_sign": false,
+      "etalon_id": "culpa nostrud dolore aute in",
+      "external_id": "consectetur occaecat minim in",
+      "temporary_id": "non magna",
+      "last_update_dt": "1981-07-15T18:31:55.887Z",
+      "cont_meth_cat_cd": "1"
+    },
+    {
+      "ref_num": "occaecat consequat",
+      "del_sign": false,
+      "etalon_id": "incididunt",
+      "external_id": "aliqua ut deserunt anim",
+      "temporary_id": "consequat ut aliqua adipisicing",
+      "last_update_dt": "1941-12-21T15:44:54.495Z",
+      "cont_meth_cat_cd": "3"
+    }
+  ],
+  "del_sign": false,
+  "rip_date": "1995-07-20T07:01:57.462Z",
+  "start_dt": "1944-03-27T02:20:36.565Z",
+  "vehicles": [
+    {
+      "del_sign": true,
+      "etalon_id": "incididunt",
+      "pts_number": "commodo velit ipsum sint",
+      "reg_number": "incididunt irure e",
+      "sts_number": "deserunt amet reprehenderit ips",
+      "vin_number": "occaecat",
+      "description": "exercitation cillum dolore",
+      "chronicle_id": "pariatur ess",
+      "temporary_id": "ad elit eu velit ex",
+      "last_update_dt": "1992-05-07T15:07:41.385Z",
+      "vehicles_docs_rel": [
+        {
+          "document_id": "officia labore irure nisi fugiat"
+        },
+        {
+          "document_id": "est et"
+        },
+        {
+          "document_id": "proident"
+        },
+        {
+          "document_id": "minim"
+        }
+      ]
+    },
+    {
+      "del_sign": true,
+      "etalon_id": "qui",
+      "pts_number": "elit pariatur exe",
+      "reg_number": "velit dolor sit commodo",
+      "sts_number": "anim Lorem ut",
+      "vin_number": "enim pariatur",
+      "description": "ut minim ullamco voluptate fugiat",
+      "chronicle_id": "inc",
+      "temporary_id": "adipisicing",
+      "last_update_dt": "2010-06-21T07:56:24.680Z",
+      "vehicles_docs_rel": [
+        {
+          "document_id": "deserunt sunt tempor"
+        },
+        {
+          "document_id": "cupidatat Duis mollit"
+        },
+        {
+          "document_id": "quis voluptate amet occaecat sint"
+        }
+      ]
+    }
+  ],
+  "addresses": [
+    {
+      "unad": "dolor qui sed adipisicing magna",
+      "unom": "eiusmod laboris et",
+      "end_dt": "1972-07-19T15:28:10.522Z",
+      "region": "do eu",
+      "room_no": "magna adipisicing ipsum",
+      "del_sign": false,
+      "house_no": "aute dolor sint",
+      "kladr_id": "in ut consectetur Duis nulla",
+      "city_name": "occaecat",
+      "corpus_no": "est",
+      "etalon_id": "labore adipisicing",
+      "street_id": "occaecat ad dolore",
+      "street_omk": "ut culpa",
+      "external_id": "ut q",
+      "postal_code": "proident officia consectetur",
+      "stroenie_no": "do culpa cupidatat fu",
+      "temporary_id": "v",
+      "addr_line_one": "nulla",
+      "addr_line_two": "sunt",
+      "building_name": "laborum cillum",
+      "residence_num": "pariatur ex",
+      "last_update_dt": "1978-09-14T08:28:25.830Z",
+      "street_name_ex": "id non mollit minim",
+      "addr_line_three": "in esse",
+      "addr_usage_tp_cd": "7",
+      "moscow_area_name": "sunt",
+      "last_verified_date": "1991-03-21T21:03:44.972Z",
+      "moscow_area_ext_id": "ad laboris exercitation Duis",
+      "moscow_district_id": "nostrud",
+      "moscow_district_name": "adipisicing fugiat id veniam ut"
+    },
+    {
+      "unad": "deserunt est culpa minim",
+      "unom": "ut c",
+      "end_dt": "1950-12-20T10:27:39.133Z",
+      "region": "occaecat dolor Excepteur",
+      "room_no": "Excepteur consectetur elit",
+      "del_sign": false,
+      "house_no": "cillum non in cupidatat",
+      "kladr_id": "et",
+      "city_name": "velit laborum Duis",
+      "corpus_no": "eu pariatur culpa incididunt",
+      "etalon_id": "fugiat",
+      "street_id": "ex labore cillum s",
+      "street_omk": "minim Duis magna sunt",
+      "external_id": "officia anim labore voluptate",
+      "postal_code": "voluptate qui Ut ut eiusmod",
+      "stroenie_no": "fugiat ea dolore aliqua",
+      "temporary_id": "nulla",
+      "addr_line_one": "non laboris in",
+      "addr_line_two": "anim Duis sint Excepteur fugiat",
+      "building_name": "aliqua voluptate consequa",
+      "residence_num": "dolor ad",
+      "last_update_dt": "2016-10-19T02:07:03.171Z",
+      "street_name_ex": "cupidatat aliquip",
+      "addr_line_three": "qui sint Ut mollit",
+      "addr_usage_tp_cd": "7",
+      "moscow_area_name": "irure ",
+      "last_verified_date": "1953-07-17T11:15:50.670Z",
+      "moscow_area_ext_id": "cillum",
+      "moscow_district_id": "in",
+      "moscow_district_name": "occaecat est nulla velit"
+    },
+    {
+      "unad": "elit cillum",
+      "unom": "sit dese",
+      "end_dt": "1990-09-01T15:32:25.158Z",
+      "region": "in laborum ex",
+      "room_no": "cillum dolore proident ex enim",
+      "del_sign": false,
+      "house_no": "minim Excepteur magna",
+      "kladr_id": "enim fugiat est deserunt",
+      "city_name": "velit adipisicing et",
+      "corpus_no": "proid",
+      "etalon_id": "mollit",
+      "street_id": "laboris cil",
+      "street_omk": "ad",
+      "external_id": "incid",
+      "postal_code": "magna dolor ut adipisicing pariatur",
+      "stroenie_no": "velit anim ea",
+      "temporary_id": "minim",
+      "addr_line_one": "fugiat pariatur ve",
+      "addr_line_two": "dolor incididunt laboris id do",
+      "building_name": "nisi sit ut",
+      "residence_num": "enim",
+      "last_update_dt": "2016-06-26T14:00:52.484Z",
+      "street_name_ex": "quis nulla",
+      "addr_line_three": "occaecat sunt eiusmod ex",
+      "addr_usage_tp_cd": "1000009",
+      "moscow_area_name": "anim consequat et voluptate cillum",
+      "last_verified_date": "1999-04-24T19:45:03.295Z",
+      "moscow_area_ext_id": "fugia",
+      "moscow_district_id": "adipisicing irure dolore Lorem",
+      "moscow_district_name": "sit ex nulla enim esse"
+    }
+  ],
+  "documents": [
+    {
+      "code": "sit cupidatat",
+      "end_dt": "1966-10-22T18:29:56.676Z",
+      "comment": "consequat",
+      "ref_num": "velit in",
+      "del_sign": true,
+      "id_tp_cd": "1000016",
+      "start_dt": "1955-01-30T08:05:56.936Z",
+      "etalon_id": "ut minim occaecat aute",
+      "expiry_dt": "1990-02-16T02:15:23.983Z",
+      "assigned_by": "ad",
+      "ext_upd_date": "1965-09-10T09:11:11.105Z",
+      "origin_block": "Duis in culpa dolor",
+      "temporary_id": "minim aute elit",
+      "last_update_dt": "1981-11-02T09:27:09.843Z",
+      "last_verified_dt": "2007-05-28T18:43:52.237Z",
+      "identification_issuer": "Excepteur consequat labore ad",
+      "identification_series": "cillum dolore commodo in",
+      "identification_issuer_code": "laboris do",
+      "identification_passport_birth_place": "quis Lorem id"
+    },
+    {
+      "code": "deserunt",
+      "end_dt": "1998-08-27T16:49:23.384Z",
+      "comment": "culpa commodo ea laborum eiusmod",
+      "ref_num": "sunt au",
+      "del_sign": false,
+      "id_tp_cd": "1000016",
+      "start_dt": "1984-10-13T07:56:38.795Z",
+      "etalon_id": "laborum culpa in id moll",
+      "expiry_dt": "1992-05-24T05:24:37.553Z",
+      "assigned_by": "culpa id ut",
+      "ext_upd_date": "1977-11-11T00:30:31.264Z",
+      "origin_block": "dese",
+      "temporary_id": "quis Duis dolor",
+      "last_update_dt": "1989-12-13T10:26:13.769Z",
+      "last_verified_dt": "1976-02-19T23:52:57.661Z",
+      "identification_issuer": "quis reprehenderit aliquip",
+      "identification_series": "laborum nisi",
+      "identification_issuer_code": "fugiat laborum quis in",
+      "identification_passport_birth_place": "nostrud Excepteur laboris commodo exercitation"
+    },
+    {
+      "code": "exercitati",
+      "end_dt": "1999-09-28T17:36:55.089Z",
+      "comment": "anim minim laboris sed sint",
+      "ref_num": "dol",
+      "del_sign": true,
+      "id_tp_cd": "1000015",
+      "start_dt": "2016-03-11T05:23:23.660Z",
+      "etalon_id": "adipisicing sint ",
+      "expiry_dt": "2010-06-28T18:43:40.390Z",
+      "assigned_by": "aliqua mollit nulla sunt ea",
+      "ext_upd_date": "1942-01-09T01:00:21.701Z",
+      "origin_block": "qui velit laborum exercitation in",
+      "temporary_id": "sed dolore anim cillum",
+      "last_update_dt": "1957-03-12T19:44:52.824Z",
+      "last_verified_dt": "1945-01-13T03:50:45.058Z",
+      "identification_issuer": "consectetur",
+      "identification_series": "elit incididunt aliquip anim",
+      "identification_issuer_code": "pariatur occaecat ",
+      "identification_passport_birth_place": "a"
+    }
+  ],
+  "etalon_id": "03858028-acfd-41fc-a60b-706381ad5f97",
+  "last_name": "ut sint incididunt",
+  "spec_type": -21052272,
+  "dirtystage": 26762308,
+  "failedmask": 13752861,
+  "ext_upd_date": "1946-12-30T21:42:45.842Z",
+  "temporary_id": "eu pariatur occaecat enim",
+  "escredentials": [
+    {
+      "login": "nulla Ut esse",
+      "del_sign": true,
+      "password": "nisi",
+      "etalon_id": "ea labore in sunt eu",
+      "doc_number": "cillum Duis ullamco ea",
+      "description": "dolor quis",
+      "chronicle_id": "laborum reprehenderit",
+      "escred_tp_cd": "1000003",
+      "temporary_id": "veniam elit dolore",
+      "last_update_dt": "1996-12-15T12:38:08.170Z"
+    },
+    {
+      "login": "commodo nostr",
+      "del_sign": true,
+      "password": "aute irure reprehenderit nost",
+      "etalon_id": "Duis ipsum ex in",
+      "doc_number": "amet",
+      "description": "cillum",
+      "chronicle_id": "cillum nisi",
+      "escred_tp_cd": "1000003",
+      "temporary_id": "irure nulla non amet Ex",
+      "last_update_dt": "1975-01-13T11:44:56.206Z"
+    },
+    {
+      "login": "reprehender",
+      "del_sign": false,
+      "password": "anim aliquip incididunt proident in",
+      "etalon_id": "sed",
+      "doc_number": "est aute ipsum laboris",
+      "description": "sint incididunt",
+      "chronicle_id": "nisi do proi",
+      "escred_tp_cd": "1000003",
+      "temporary_id": "in in quis labor",
+      "last_update_dt": "1952-10-20T07:16:01.749Z"
+    }
+  ],
+  "has_privilege": true,
+  "sourcechannel": -63705052,
+  "gender_tp_code": "in Duis",
+  "given_name_one": "Duis ullamco fugiat deserunt in",
+  "given_name_two": "aute in sunt",
+  "last_update_dt": "2001-03-28T18:16:41.797Z",
+  "validationmask": 57083008,
+  "citizen_relatives": [
+    {
+      "del_sign": true,
+      "start_dt": "1994-12-25T20:12:12.443Z",
+      "etalon_id": "mollit",
+      "rel_tp_cd": "1000005",
+      "access_level": -21446337,
+      "last_update_dt": "1965-05-29T18:37:36.964Z"
+    },
+    {
+      "del_sign": false,
+      "start_dt": "1994-06-16T08:27:07.295Z",
+      "etalon_id": "elit veniam Lorem eu",
+      "rel_tp_cd": "1000003",
+      "access_level": -92154103,
+      "last_update_dt": "2006-03-22T20:31:16.708Z"
+    },
+    {
+      "del_sign": false,
+      "start_dt": "2002-11-27T11:36:31.446Z",
+      "etalon_id": "laboris et id veniam exercitation",
+      "rel_tp_cd": "1000005",
+      "access_level": 22481228,
+      "last_update_dt": "1939-03-17T18:54:57.991Z"
+    }
+  ],
+  "last_update_tx_id": "magna ut aliquip",
+  "privilege_control": false,
+  "pname_ext_upd_date": "2004-12-04T04:11:57.630Z",
+  "birth_place_line_one": "sunt ad quis culpa"
+}
