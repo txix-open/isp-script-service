@@ -147,7 +147,7 @@
   version = "v2.0.0"
 
 [[projects]]
-  digest = "1:c21433cfa6c99bb1d32bad741e88dc756f8f9a6980d930d78fd4f413a0a94488"
+  digest = "1:3712790069e6855700e86d0b7b0b80276fa66b73e1aacd085bcd1a57a947e991"
   name = "github.com/integration-system/isp-lib"
   packages = [
     "backend",
@@ -163,7 +163,7 @@
     "utils",
   ]
   pruneopts = "UT"
-  revision = "126981c403e27788aa52fd7ce1a13b43596e04ae"
+  revision = "9ecfa413468d829dce66fe95562b4366b0dfb2a0"
   version = "v2.0.0"
 
 [[projects]]
@@ -588,7 +588,7 @@
   source = "https://github.com/layeh/gopher-json.git"
 
 [[projects]]
-  digest = "1:a038191e555e37339f74c0b935263ff8859fe4234b9cf1fceb6da208c15f48e7"
+  digest = "1:25ea8c84118bb09a6ea1fe5d8a2e72d7ead40af714b74d1e849af821f3502414"
   name = "nhooyr.io/websocket"
   packages = [
     ".",
@@ -596,8 +596,8 @@
     "internal/wsjs",
   ]
   pruneopts = "UT"
-  revision = "f178ccfaa5d3897de3ff508d9c551660f69f56da"
-  version = "v1.7.3"
+  revision = "edda9c633d5c78c7d38fcc952b4105dd4ccfb619"
+  version = "v1.7.4"
 
 [solve-meta]
   analyzer-name = "dep"
