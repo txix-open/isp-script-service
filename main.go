@@ -57,7 +57,12 @@ func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
 func onLocalConfigLoad(cfg *conf.Configuration) {
 	handlers := helper.GetAllHandlers()
 	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
-	backend.StartBackendGrpcServer(cfg.GrpcInnerAddress, service)
+		backend.StartBackendGrpcServer(
+		cfg.GrpcInnerAddress, service,
+		grpc.MaxRecvMsgSize(1024*1024*4),
+		grpc.MaxSendMsgSize(1024*1024*4),
+	)
+
 }
 
 func routesData(localConfig interface{}) bootstrap.ModuleInfo {
