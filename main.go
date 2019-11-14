@@ -60,8 +60,8 @@ func onLocalConfigLoad(cfg *conf.Configuration) {
 	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
 		backend.StartBackendGrpcServer(
 		cfg.GrpcInnerAddress, service,
-		grpc.MaxRecvMsgSize(1024*1024*4),
-		grpc.MaxSendMsgSize(1024*1024*4),
+		grpc.MaxRecvMsgSize(1024*1024*512),
+		grpc.MaxSendMsgSize(1024*1024*512),
 	)
 
 }
