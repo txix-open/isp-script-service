@@ -7,6 +7,7 @@ import (
 	"github.com/integration-system/isp-lib/config/schema"
 	"github.com/integration-system/isp-lib/logger"
 	"github.com/integration-system/isp-lib/structure"
+	"google.golang.org/grpc"
 	"isp-script-service/compile"
 	"isp-script-service/conf"
 	"isp-script-service/helper"
