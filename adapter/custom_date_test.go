@@ -32,7 +32,7 @@ var data map[string]interface{}
 var request = domain.ExecuteRequest{}
 
 func init() {
-	config.InitRemoteConfig(&conf.RemoteConfig{}, remoteConf)
+	config.InitRemoteConfig(&conf.RemoteConfig{}, []byte(remoteConf))
 
 	obj, err := readFile(objectFile)
 	if err != nil {
