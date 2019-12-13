@@ -3,8 +3,9 @@ package compile
 import (
 	"fmt"
 	"github.com/integration-system/isp-lib/config"
-	"github.com/integration-system/isp-lib/logger"
+	log "github.com/integration-system/isp-log"
 	"isp-script-service/conf"
+	"isp-script-service/log_code"
 	"isp-script-service/script"
 )
 
@@ -23,7 +24,7 @@ func (compileScript) Init(scriptDef []conf.ScriptDefinition) {
 	for _, value := range scriptDef {
 		prog, err := Script.Create(value.Script)
 		if err != nil {
-			logger.Error(err)
+			log.Error(log_code.ErrorCreateScript, err)
 			continue
 		}
 		remoteScripts[value.Id] = prog
