@@ -18,8 +18,6 @@ import (
 
 var (
 	version = "1.0.0"
-
-	metricMethod = metric.NewMethodMetrics("api", metric.GetRegistry())
 )
 
 func main() {
@@ -62,8 +60,7 @@ func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
 
 func onLocalConfigLoad(cfg *conf.Configuration) {
 	handlers := helper.GetAllHandlers()
-	service := backend.GetDefaultService(cfg.ModuleName, handlers...).
-		WithInterceptor(metric.WithMetrics(metricMethod, nil))
+	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
 	backend.StartBackendGrpcServer(
 		cfg.GrpcInnerAddress, service,
 		grpc.MaxRecvMsgSize(1024*1024*512),
