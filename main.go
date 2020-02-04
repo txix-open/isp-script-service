@@ -6,6 +6,7 @@ import (
 	"github.com/integration-system/isp-lib/bootstrap"
 	"github.com/integration-system/isp-lib/config/schema"
 	"github.com/integration-system/isp-lib/logger"
+	"github.com/integration-system/isp-lib/metric"
 	"github.com/integration-system/isp-lib/structure"
 	"google.golang.org/grpc"
 	"isp-script-service/compile"
@@ -53,12 +54,14 @@ func onShutdown(_ context.Context, _ os.Signal) {
 
 func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
 	compile.Script.Init(remoteConfig.Scripts)
+	metric.InitCollectors(remoteConfig.Metrics, oldRemoteConfig.Metrics)
+	metric.InitHttpServer(remoteConfig.Metrics)
 }
 
 func onLocalConfigLoad(cfg *conf.Configuration) {
 	handlers := helper.GetAllHandlers()
 	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
-		backend.StartBackendGrpcServer(
+	backend.StartBackendGrpcServer(
 		cfg.GrpcInnerAddress, service,
 		grpc.MaxRecvMsgSize(1024*1024*512),
 		grpc.MaxSendMsgSize(1024*1024*512),
