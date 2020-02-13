@@ -46,6 +46,7 @@ func (*Goja) Execute(program Script, arg interface{}) (interface{}, error) {
 	})
 	defer func() {
 		t.Stop()
+		vm.ClearInterrupt()
 		pool.Put(vm)
 	}()
 
