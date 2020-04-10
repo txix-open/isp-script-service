@@ -2,42 +2,29 @@ package router
 
 import (
 	"fmt"
-	"github.com/integration-system/isp-lib/backend"
-	"github.com/integration-system/isp-lib/modules"
-	log "github.com/integration-system/isp-log"
+
+	"github.com/integration-system/isp-lib/v2/backend"
 	"google.golang.org/grpc"
 	md "google.golang.org/grpc/metadata"
-	"isp-script-service/codes"
 )
 
 var (
 	Client = backend.NewRxGrpcClient(
-		backend.WithDialOptions(grpc.WithInsecure(), grpc.WithBlock()),
-		backend.WithDialingErrorHandler(func(err error) {
-			log.Warnf(codes.InvokeRouterServiceError, "Router client dialing err: %v", err)
-		}),
+		backend.WithDialOptions(grpc.WithInsecure()),
 	)
 )
 
 func Invoke(methodPath string, request interface{}, metadata map[string]interface{}) (interface{}, error) {
-	newMd := md.New(map[string]string{})
-	for key, info := range metadata {
-		newMd.Set(key, fmt.Sprintf("%v", info))
-	} //todo metadata
+	newMd := md.New(nil)
+	for key, val := range metadata {
+		newMd.Set(key, fmt.Sprint(val))
+	}
 
 	var response interface{}
-	if err := Client.Visit(func(c *backend.InternalGrpcClient) error {
-		resp, err := c.InvokeWithDynamicStruct(
-			methodPath,
-			modules.RouterModuleId,
-			request,
-			//todo metadata
-		)
-		response = resp
-		return err
-	}); err != nil {
+	err := Client.Invoke(methodPath, -3, request, &response, backend.WithMetadata(newMd))
+	if err != nil {
 		return nil, err
-	} else {
-		return response, nil
 	}
+
+	return response, nil
 }

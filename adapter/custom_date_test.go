@@ -2,18 +2,19 @@ package adapter
 
 import (
 	"encoding/json"
-	"github.com/integration-system/isp-lib/config"
+	"io/ioutil"
+	"log"
+	"os"
+	"testing"
+
+	"github.com/integration-system/isp-lib/v2/config"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
 	"isp-script-service/compile"
 	"isp-script-service/conf"
 	"isp-script-service/controller"
 	"isp-script-service/domain"
 	"isp-script-service/script"
-	"log"
-	"os"
-	"testing"
 )
 
 const (

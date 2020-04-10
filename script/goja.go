@@ -2,12 +2,13 @@ package script
 
 import (
 	"errors"
-	"github.com/dop251/goja"
-	"github.com/integration-system/isp-lib/config"
-	"isp-script-service/conf"
-	"isp-script-service/router"
 	"sync"
 	"time"
+
+	"github.com/dop251/goja"
+	"github.com/integration-system/isp-lib/v2/config"
+	"isp-script-service/conf"
+	"isp-script-service/router"
 )
 
 var pool = &sync.Pool{

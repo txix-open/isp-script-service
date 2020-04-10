@@ -2,18 +2,20 @@ package main
 
 import (
 	"context"
-	"github.com/integration-system/isp-lib/backend"
-	"github.com/integration-system/isp-lib/bootstrap"
-	"github.com/integration-system/isp-lib/config/schema"
-	"github.com/integration-system/isp-lib/logger"
-	"github.com/integration-system/isp-lib/metric"
-	"github.com/integration-system/isp-lib/structure"
+	"os"
+
+	"github.com/integration-system/isp-lib/v2/backend"
+	"github.com/integration-system/isp-lib/v2/bootstrap"
+	"github.com/integration-system/isp-lib/v2/config/schema"
+	"github.com/integration-system/isp-lib/v2/metric"
+	"github.com/integration-system/isp-lib/v2/structure"
+	log "github.com/integration-system/isp-log"
+	"github.com/integration-system/isp-log/stdcodes"
 	"google.golang.org/grpc"
 	"isp-script-service/compile"
 	"isp-script-service/conf"
 	"isp-script-service/helper"
 	"isp-script-service/router"
-	"os"
 )
 
 var (
@@ -59,6 +61,7 @@ func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
 }
 
 func onLocalConfigLoad(cfg *conf.Configuration) {
+	metric.InitProfiling(cfg.ModuleName)
 	handlers := helper.GetAllHandlers()
 	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
 	backend.StartBackendGrpcServer(
@@ -80,9 +83,11 @@ func routesData(localConfig interface{}) bootstrap.ModuleInfo {
 }
 
 func onRemoteErrorReceive(errorMessage map[string]interface{}) {
-	logger.Warn(errorMessage)
+	log.WithMetadata(errorMessage).Error(stdcodes.ReceiveErrorFromConfig, "error from config service")
 }
 
 func onRemoteConfigErrorReceive(errorMessage string) {
-	logger.Error(errorMessage)
+	log.WithMetadata(map[string]interface{}{
+		"message": errorMessage,
+	}).Error(stdcodes.ReceiveErrorOnGettingConfigFromConfig, "error on getting remote configuration")
 }

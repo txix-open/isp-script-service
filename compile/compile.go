@@ -2,8 +2,10 @@ package compile
 
 import (
 	"fmt"
-	"github.com/integration-system/isp-lib/config"
-	"github.com/integration-system/isp-lib/logger"
+
+	"github.com/integration-system/isp-lib/v2/config"
+	log "github.com/integration-system/isp-log"
+	"isp-script-service/codes"
 	"isp-script-service/conf"
 	"isp-script-service/script"
 )
@@ -20,10 +22,10 @@ func (compileScript) GetById(id string) script.Script {
 }
 
 func (compileScript) Init(scriptDef []conf.ScriptDefinition) {
-	for _, value := range scriptDef {
+	for i, value := range scriptDef {
 		prog, err := Script.Create(value.Script)
 		if err != nil {
-			logger.Error(err)
+			log.Errorf(codes.CreateScriptFromConfigError, "create script from config (number %d): %v", i, err)
 			continue
 		}
 		remoteScripts[value.Id] = prog
