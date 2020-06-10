@@ -10,11 +10,11 @@ import (
 	"github.com/integration-system/isp-lib/v2/config"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/stretchr/testify/assert"
-	"isp-script-service/compile"
 	"isp-script-service/conf"
 	"isp-script-service/controller"
 	"isp-script-service/domain"
 	"isp-script-service/script"
+	"isp-script-service/service"
 )
 
 const (
@@ -85,7 +85,7 @@ func BenchmarkGoCustomData(b *testing.B) {
 }
 
 func BenchmarkJsCustomData(b *testing.B) {
-	scr, err := compile.Script.Create(request.Script)
+	scr, err := service.Script.Create(request.Script)
 	if err != nil {
 		panic(err)
 	}
@@ -95,7 +95,7 @@ func BenchmarkJsCustomData(b *testing.B) {
 }
 
 func BenchmarkInlineJson(b *testing.B) {
-	c, err := compile.Script.Create("var b = JSON.parse(arg); return JSON.stringify(b)")
+	c, err := service.Script.Create("var b = JSON.parse(arg); return JSON.stringify(b)")
 	if err != nil {
 		panic(err)
 	}
@@ -112,7 +112,7 @@ func BenchmarkInlineJson(b *testing.B) {
 }
 
 func BenchmarkJsoniterJson(b *testing.B) {
-	c, err := compile.Script.Create("var b = arg; return b")
+	c, err := service.Script.Create("var b = arg; return b")
 	if err != nil {
 		panic(err)
 	}
