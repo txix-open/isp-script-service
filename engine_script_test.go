@@ -2,6 +2,9 @@ package main
 
 import (
 	json2 "encoding/json"
+	"strings"
+	"testing"
+
 	"github.com/dop251/goja"
 	"github.com/robertkrimen/otto"
 	"github.com/robertkrimen/otto/parser"
@@ -9,8 +12,6 @@ import (
 	"github.com/yuin/gopher-lua"
 	"github.com/yuin/gopher-lua/parse"
 	"layeh.com/gopher-json"
-	"strings"
-	"testing"
 )
 
 const (

@@ -10,6 +10,7 @@ require (
 	github.com/integration-system/isp-log v1.1.3
 	github.com/jmoiron/jsonq v0.0.0-20150511023944-e874b168d07e
 	github.com/json-iterator/go v1.1.9
+	github.com/pkg/errors v0.9.1
 	github.com/robertkrimen/otto v0.0.0-20191219234010-c382bd3c16ff
 	github.com/stretchr/testify v1.5.1
 	github.com/yuin/gopher-lua v0.0.0-20191220021717-ab39c6098bdb

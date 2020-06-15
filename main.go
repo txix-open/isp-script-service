@@ -12,10 +12,10 @@ import (
 	log "github.com/integration-system/isp-log"
 	"github.com/integration-system/isp-log/stdcodes"
 	"google.golang.org/grpc"
-	"isp-script-service/compile"
 	"isp-script-service/conf"
 	"isp-script-service/helper"
 	"isp-script-service/router"
+	"isp-script-service/service"
 )
 
 var (
@@ -55,7 +55,7 @@ func onShutdown(_ context.Context, _ os.Signal) {
 }
 
 func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
-	compile.Script.Init(remoteConfig.Scripts)
+	service.Script.ReceiveConfiguration(remoteConfig.Scripts)
 	metric.InitCollectors(remoteConfig.Metrics, oldRemoteConfig.Metrics)
 	metric.InitHttpServer(remoteConfig.Metrics)
 }

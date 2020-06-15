@@ -3,9 +3,10 @@ package script
 import (
 	"errors"
 	"fmt"
+	"testing"
+
 	"github.com/dop251/goja"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestGoja_AddFunction(t *testing.T) {
