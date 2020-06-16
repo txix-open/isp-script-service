@@ -17,6 +17,10 @@ func (c scriptController) Execute(req domain.ExecuteRequest) *domain.ScriptResp 
 	return service.Script.Execute(req)
 }
 
+func (c scriptController) BatchExecute(req []domain.ExecuteByIdRequest) []domain.ScriptResp {
+	return service.Script.BatchExecute(req)
+}
+
 func (c scriptController) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []domain.ScriptResp {
 	return service.Script.BatchExecuteById(req)
 }

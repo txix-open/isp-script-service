@@ -51,6 +51,25 @@ func (s *scriptService) ExecuteById(req domain.ExecuteByIdRequest) (*domain.Scri
 	return s.executeScript(scr, req.Arg), nil
 }
 
+func (s *scriptService) BatchExecute(req []domain.ExecuteByIdRequest) []domain.ScriptResp {
+	wg := sync.WaitGroup{}
+	store := s.store.Load().(map[string]script.Script)
+	response := make([]domain.ScriptResp, len(req))
+	for i := range req {
+		wg.Add(1)
+		go func(i int) {
+			defer wg.Done()
+			if store[req[i].Id] == nil {
+				response[i] = *s.respError(errors.Errorf("not defined script for id %s", req[i].Id), domain.ErrorCompile)
+			} else {
+				response[i] = *s.executeScript(store[req[i].Id], req[i].Arg)
+			}
+		}(i)
+	}
+	wg.Wait()
+	return response
+}
+
 func (s *scriptService) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []domain.ScriptResp {
 	wg := sync.WaitGroup{}
 	store := s.store.Load().(map[string]script.Script)

@@ -1,3 +1,5 @@
+### V2.3.0
+* additional batch method 
 ### V2.2.0
 * add batch execution
 ### V2.1.1
