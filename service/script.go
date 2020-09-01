@@ -101,13 +101,15 @@ func (*scriptService) Create(scr string) (script.Script, error) {
 	return script.Default().Compile(scr)
 }
 
+var errEmpty = errors.New("empty answer, maybe lost return")
+
 func (s *scriptService) executeScript(scr script.Script, arg interface{}) *domain.ScriptResp {
 	response, err := script.Default().Execute(scr, arg)
 	if err != nil {
 		return s.respError(err, domain.ErrorRunTime)
 	}
 	if response == nil {
-		return s.respError(errors.New("empty answer, maybe lost return"), domain.ErrorRunTime)
+		return s.respError(errEmpty, domain.ErrorRunTime)
 	}
 
 	return &domain.ScriptResp{
