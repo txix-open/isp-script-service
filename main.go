@@ -4,6 +4,11 @@ import (
 	"context"
 	"os"
 
+	"isp-script-service/conf"
+	"isp-script-service/helper"
+	"isp-script-service/router"
+	"isp-script-service/service"
+
 	"github.com/integration-system/isp-lib/v2/backend"
 	"github.com/integration-system/isp-lib/v2/bootstrap"
 	"github.com/integration-system/isp-lib/v2/config/schema"
@@ -12,15 +17,20 @@ import (
 	log "github.com/integration-system/isp-log"
 	"github.com/integration-system/isp-log/stdcodes"
 	"google.golang.org/grpc"
-	"isp-script-service/conf"
-	"isp-script-service/helper"
-	"isp-script-service/router"
-	"isp-script-service/service"
 )
 
 var (
 	version = "1.0.0"
 )
+
+// @title isp-script-service
+// @version 1.0.0
+// @description Сервис для обработка и выполения JavaScript скриптов
+
+// @license.name GNU GPL v3.0
+
+// @host localhost:9024
+// @BasePath /api/script
 
 func main() {
 	bootstrap.

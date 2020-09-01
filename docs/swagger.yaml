@@ -1,0 +1,158 @@
+basePath: /api/script
+definitions:
+  domain.BatchExecuteByIdsRequest:
+    properties:
+      arg:
+        type: object
+      ids:
+        items:
+          type: string
+        type: array
+    type: object
+  domain.Error:
+    properties:
+      description:
+        type: string
+      type:
+        type: string
+    type: object
+  domain.ExecuteByIdRequest:
+    properties:
+      arg:
+        type: object
+      id:
+        type: string
+    type: object
+  domain.ExecuteRequest:
+    properties:
+      arg:
+        type: object
+      script:
+        type: string
+    type: object
+  domain.ScriptResp:
+    properties:
+      error:
+        $ref: '#/definitions/domain.Error'
+      result:
+        type: object
+    type: object
+  structure.GrpcError:
+    properties:
+      details:
+        items:
+          type: object
+        type: array
+      errorCode:
+        type: string
+      errorMessage:
+        type: string
+    type: object
+host: localhost:9024
+info:
+  contact: {}
+  description: '{описание сервиса}'
+  license:
+    name: GNU GPL v3.0
+  title: isp-script-service
+  version: 1.0.0
+paths:
+  /script/batch_execute:
+    post:
+      consumes:
+      - application/json
+      description: Возвращает результат выполнения скриптов и ошибок (если есть)
+      parameters:
+      - description: Набор идентфикаторов и аргументов
+        in: body
+        name: body
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/domain.ExecuteByIdRequest'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.ScriptResp'
+            type: array
+      summary: Выполнить набор скриптов под конкретными ID
+      tags:
+      - script
+  /script/batch_execute_by_ids:
+    post:
+      consumes:
+      - application/json
+      description: Возвращает результат выполнения скриптов и ошибок (если есть)
+      parameters:
+      - description: Набор идентфикаторов и единый аргумент
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.BatchExecuteByIdsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.ScriptResp'
+            type: array
+      summary: Выполнить набор скриптов под конкретными ID с идентичным аргументом для всех
+      tags:
+      - script
+  /script/execute:
+    post:
+      consumes:
+      - application/json
+      description: Возвращает результат выполнения скрипта и ошибку (если есть)
+      parameters:
+      - description: Скрипт необходимый к выполнению
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ExecuteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.ScriptResp'
+      summary: Выполнить скрипт без учёта идентификатора
+      tags:
+      - script
+  /script/execute_by_id:
+    post:
+      consumes:
+      - application/json
+      description: Возвращает результат выполнения скрипта и ошибку (если есть)
+      parameters:
+      - description: Идентифиактор скрипта
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ExecuteByIdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.ScriptResp'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/structure.GrpcError'
+      summary: Выполнить скрипт под конкректным ID
+      tags:
+      - script
+swagger: "2.0"
