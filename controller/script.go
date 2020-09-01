@@ -18,7 +18,7 @@ type scriptController struct{}
 // @Param body body domain.ExecuteByIdRequest true "Идентифиактор скрипта"
 // @Success 200 {object} domain.ScriptResp
 // @Failure 404 {object} structure.GrpcError
-// @Router /script/execute_by_id [POST]
+// @Router /script/execute_by_id [POST].
 func (c scriptController) ExecuteById(req domain.ExecuteByIdRequest) (*domain.ScriptResp, error) {
 	return service.Script.ExecuteById(req)
 }
@@ -31,7 +31,7 @@ func (c scriptController) ExecuteById(req domain.ExecuteByIdRequest) (*domain.Sc
 // @Produce  json
 // @Param body body domain.ExecuteRequest true "Скрипт необходимый к выполнению"
 // @Success 200 {object} domain.ScriptResp
-// @Router /script/execute [POST]
+// @Router /script/execute [POST].
 func (c scriptController) Execute(req domain.ExecuteRequest) *domain.ScriptResp {
 	return service.Script.Execute(req)
 }
@@ -44,7 +44,7 @@ func (c scriptController) Execute(req domain.ExecuteRequest) *domain.ScriptResp 
 // @Produce  json
 // @Param body body []domain.ExecuteByIdRequest true "Набор идентфикаторов и аргументов"
 // @Success 200 {array} domain.ScriptResp
-// @Router /script/batch_execute [POST]
+// @Router /script/batch_execute [POST].
 func (c scriptController) BatchExecute(req []domain.ExecuteByIdRequest) []domain.ScriptResp {
 	return service.Script.BatchExecute(req)
 }
@@ -57,7 +57,7 @@ func (c scriptController) BatchExecute(req []domain.ExecuteByIdRequest) []domain
 // @Produce  json
 // @Param body body domain.BatchExecuteByIdsRequest true "Набор идентфикаторов и единый аргумент"
 // @Success 200 {array} domain.ScriptResp
-// @Router /script/batch_execute_by_ids [POST]
+// @Router /script/batch_execute_by_ids [POST].
 func (c scriptController) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []domain.ScriptResp {
 	return service.Script.BatchExecuteById(req)
 }

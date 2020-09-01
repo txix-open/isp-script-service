@@ -2,13 +2,13 @@ package script
 
 import (
 	"errors"
+	"isp-script-service/conf"
+	"isp-script-service/router"
 	"sync"
 	"time"
 
 	"github.com/dop251/goja"
 	"github.com/integration-system/isp-lib/v2/config"
-	"isp-script-service/conf"
-	"isp-script-service/router"
 )
 
 var pool = &sync.Pool{
@@ -20,6 +20,7 @@ var pool = &sync.Pool{
 func initVm() *goja.Runtime {
 	vm := goja.New()
 	vm.Set("invoke", router.Invoke)
+
 	return vm
 }
 
@@ -30,13 +31,17 @@ func (*Goja) Compile(script string) (Script, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &GojaProgram{prog: prog}, nil
 }
 
+var errUnknownEngine = errors.New("unknown engine")
+
 func (*Goja) Execute(program Script, arg interface{}) (interface{}, error) {
 	value, ok := program.Src().(*goja.Program)
+
 	if !ok {
-		return nil, errors.New("unknown engine")
+		return nil, errUnknownEngine
 	}
 
 	vm := pool.Get().(*goja.Runtime)
@@ -56,24 +61,8 @@ func (*Goja) Execute(program Script, arg interface{}) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return res.Export(), nil
-	/*go func() {
-		result, err := vm.RunProgram(value)
-		if err != nil {
-			errorCh <- err
-			return
-		}
-		resultCh <- result.Export()
-	}()
-	select {
-	case result := <-resultCh:
-		return result, nil
-	case err := <-errorCh:
-		return nil, err
-	case <-time.After(awaitTime):
-		vm.Interrupt("time exceeded")
-		return nil, errors.New("time exceeded")
-	}*/
 }
 
 type GojaProgram struct {

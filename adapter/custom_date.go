@@ -49,7 +49,7 @@ var (
 	}
 )
 
-func getCustomData(data map[string]interface{}, id string, version int64) map[string]interface{} {
+func GetCustomData(data map[string]interface{}, id string, version int64) map[string]interface{} {
 	jq := jsonq.NewQuery(data)
 
 	m := make(map[string]interface{}, 6)
@@ -94,6 +94,7 @@ func expandArrayWithMapping(
 ) {
 	docs, err := src.ArrayOfObjects(arrayPath)
 	l := len(docs)
+	//nolint
 	if err == nil && l > 0 {
 		documents := make(map[string][]interface{}, l)
 		for _, d := range docs {

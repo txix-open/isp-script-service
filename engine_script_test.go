@@ -1,4 +1,4 @@
-package main
+package main_test
 
 import (
 	json2 "encoding/json"
@@ -9,9 +9,9 @@ import (
 	"github.com/robertkrimen/otto"
 	"github.com/robertkrimen/otto/parser"
 	"github.com/stretchr/testify/assert"
-	"github.com/yuin/gopher-lua"
+	lua "github.com/yuin/gopher-lua"
 	"github.com/yuin/gopher-lua/parse"
-	"layeh.com/gopher-json"
+	json "layeh.com/gopher-json"
 )
 
 const (
@@ -58,7 +58,7 @@ var (
 		},
 	}
 	srcString []byte
-	expecting = make(map[string]interface{}, 0)
+	expecting = make(map[string]interface{})
 )
 
 func init() {
@@ -107,7 +107,6 @@ func TestGoja(t *testing.T) {
 	runTime := goja.New()
 	runTime.Set("b", recordsExample)
 	_, err := runTime.RunProgram(prog)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -121,13 +120,6 @@ func TestGopherLua(t *testing.T) {
 	l := lua.NewState()
 	defer l.Close()
 
-	/*f, err := l.LoadString(`
-			println(src)
-			dst = src
-	`)
-		if !assert.NoError(err) {
-			return
-		}*/
 	b, _ := json2.Marshal(recordsExample)
 	val, err := json.Decode(l, b)
 	if !assert.NoError(err) {
@@ -142,7 +134,10 @@ func TestGopherLua(t *testing.T) {
 	}
 	dst := l.GetGlobal("dst")
 	b, err = json.Encode(dst)
-	m := make(map[string]interface{}, 0)
+	if !assert.NoError(err) {
+		return
+	}
+	m := make(map[string]interface{})
 	err = json2.Unmarshal(b, &m)
 	if !assert.NoError(err) {
 		return
@@ -186,7 +181,6 @@ func BenchmarkGoja(b *testing.B) {
 		runTime := goja.New()
 		runTime.Set("b", recordsExample)
 		_, err := runTime.RunProgram(prog)
-
 		if err != nil {
 			return
 		}
@@ -223,12 +217,14 @@ func BenchmarkGopherLua(b *testing.B) {
 
 		dst := l.GetGlobal("dst")
 		c, err := json.Encode(dst)
-		m := make(map[string]interface{}, 0)
+		if err != nil {
+			panic(err)
+		}
+		m := make(map[string]interface{})
 		err = json2.Unmarshal(c, &m)
 		if err != nil {
 			panic(err)
 		}
-
 		l.Close()
 	}
 }

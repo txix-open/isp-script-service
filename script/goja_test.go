@@ -1,4 +1,4 @@
-package script
+package script_test
 
 import (
 	"errors"
@@ -31,6 +31,7 @@ func TestGoja_AddFunction(t *testing.T) {
 		a.Equal("string", varchar)
 		a.Equal(0, integer)
 		a.Equal("test", object)
+
 		return "test", nil
 	}
 	vm := goja.New()
@@ -43,6 +44,7 @@ func TestGoja_AddFunction(t *testing.T) {
 		a.Equal("string", varchar)
 		a.Equal(0, integer)
 		a.Equal("test", object)
+		//nolint
 		return "test", errors.New("TEST")
 	}
 	vm = goja.New()

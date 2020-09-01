@@ -2,12 +2,11 @@ package main
 
 import (
 	"context"
-	"os"
-
 	"isp-script-service/conf"
 	"isp-script-service/helper"
 	"isp-script-service/router"
 	"isp-script-service/service"
+	"os"
 
 	"github.com/integration-system/isp-lib/v2/backend"
 	"github.com/integration-system/isp-lib/v2/bootstrap"
@@ -19,9 +18,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-var (
-	version = "1.0.0"
-)
+var version = "1.0.0"
 
 // @title isp-script-service
 // @version 1.0.0
@@ -49,6 +46,7 @@ func main() {
 
 func socketConfiguration(cfg interface{}) structure.SocketConfiguration {
 	appConfig := cfg.(*conf.Configuration)
+
 	return structure.SocketConfiguration{
 		Host:   appConfig.ConfigServiceAddress.IP,
 		Port:   appConfig.ConfigServiceAddress.Port,
@@ -71,19 +69,21 @@ func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
 }
 
 func onLocalConfigLoad(cfg *conf.Configuration) {
+	//nolint
+	msgSize := 1024 * 1024 * 512
 	metric.InitProfiling(cfg.ModuleName)
 	handlers := helper.GetAllHandlers()
 	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
 	backend.StartBackendGrpcServer(
 		cfg.GrpcInnerAddress, service,
-		grpc.MaxRecvMsgSize(1024*1024*512),
-		grpc.MaxSendMsgSize(1024*1024*512),
+		grpc.MaxRecvMsgSize(msgSize),
+		grpc.MaxSendMsgSize(msgSize),
 	)
-
 }
 
 func routesData(localConfig interface{}) bootstrap.ModuleInfo {
 	cfg := localConfig.(*conf.Configuration)
+
 	return bootstrap.ModuleInfo{
 		ModuleName:       cfg.ModuleName,
 		ModuleVersion:    version,
