@@ -1,3 +1,7 @@
+### V2.4.0
+* added swagger docs
+* updated to new isp-lib (v2.6.1)
+* added golanci support
 ### V2.3.0
 * additional batch method 
 ### V2.2.0
