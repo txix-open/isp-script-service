@@ -8,6 +8,8 @@ definitions:
         items:
           type: string
         type: array
+    required:
+    - ids
     type: object
   domain.Error:
     properties:
@@ -22,6 +24,8 @@ definitions:
         type: object
       id:
         type: string
+    required:
+    - id
     type: object
   domain.ExecuteRequest:
     properties:
@@ -29,11 +33,14 @@ definitions:
         type: object
       script:
         type: string
+    required:
+    - script
     type: object
   domain.ScriptResp:
     properties:
       error:
         $ref: '#/definitions/domain.Error'
+        type: object
       result:
         type: object
     type: object
@@ -48,10 +55,10 @@ definitions:
       errorMessage:
         type: string
     type: object
-host: localhost:9024
+host: localhost:9000
 info:
   contact: {}
-  description: '{описание сервиса}'
+  description: Сервис для обработка и выполения JavaScript скриптов
   license:
     name: GNU GPL v3.0
   title: isp-script-service

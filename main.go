@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"isp-script-service/conf"
+	_ "isp-script-service/docs"
 	"isp-script-service/helper"
 	"isp-script-service/router"
 	"isp-script-service/service"
