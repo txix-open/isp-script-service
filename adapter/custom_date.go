@@ -92,25 +92,25 @@ func expandArrayWithMapping(
 	arrayPath, typeFieldPath, dstKey string,
 	mapping map[string]string,
 ) {
+	var documents map[string][]interface{}
 	docs, err := src.ArrayOfObjects(arrayPath)
 	l := len(docs)
-	//nolint
 	if err == nil && l > 0 {
-		documents := make(map[string][]interface{}, l)
+		documents = make(map[string][]interface{}, l)
 		for _, d := range docs {
-			if docType, ok := d[typeFieldPath]; ok {
-				if docTypeStr, ok := docType.(string); ok {
-					if v, ok := mapping[docTypeStr]; ok {
-						putDoc(documents, v, d)
-					} else if v, ok := mapping[allOtherValues]; ok {
-						putDoc(documents, v, d)
-					}
-				}
+			if docType, ok := d[typeFieldPath]; !ok {
+				continue
+			} else if docTypeStr, ok := docType.(string); !ok {
+				continue
+			} else if v, ok := mapping[docTypeStr]; !ok {
+				putDoc(documents, v, d)
+			} else if v, ok := mapping[allOtherValues]; !ok {
+				putDoc(documents, v, d)
 			}
 		}
-		if len(documents) > 0 {
-			dst[dstKey] = documents
-		}
+	}
+	if len(documents) > 0 {
+		dst[dstKey] = documents
 	}
 }
 

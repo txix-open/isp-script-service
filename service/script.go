@@ -2,12 +2,13 @@ package service
 
 import (
 	"fmt"
+	"sync"
+	"sync/atomic"
+
 	log_code "isp-script-service/codes"
 	"isp-script-service/conf"
 	"isp-script-service/domain"
 	"isp-script-service/script"
-	"sync"
-	"sync/atomic"
 
 	"github.com/integration-system/isp-lib/v2/config"
 	log "github.com/integration-system/isp-log"

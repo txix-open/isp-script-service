@@ -44,7 +44,7 @@ func TestGoja_AddFunction(t *testing.T) {
 		a.Equal("string", varchar)
 		a.Equal(0, integer)
 		a.Equal("test", object)
-		//nolint
+		//nolint:goerr113
 		return "test", errors.New("TEST")
 	}
 	vm = goja.New()

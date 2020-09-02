@@ -134,8 +134,8 @@ func TestGopherLua(t *testing.T) {
 	}
 	dst := l.GetGlobal("dst")
 	b, err = json.Encode(dst)
-	if !assert.NoError(err) {
-		return
+	if err != nil {
+		panic(err)
 	}
 	m := make(map[string]interface{})
 	err = json2.Unmarshal(b, &m)

@@ -3,15 +3,16 @@ package adapter_test
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
+	"os"
+	"testing"
+
 	"isp-script-service/adapter"
 	"isp-script-service/conf"
 	"isp-script-service/controller"
 	"isp-script-service/domain"
 	"isp-script-service/script"
 	"isp-script-service/service"
-	"log"
-	"os"
-	"testing"
 
 	"github.com/integration-system/isp-lib/v2/config"
 	jsoniter "github.com/json-iterator/go"

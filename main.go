@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
+	"os"
+
 	"isp-script-service/conf"
 	"isp-script-service/helper"
 	"isp-script-service/router"
 	"isp-script-service/service"
-	"os"
 
 	"github.com/integration-system/isp-lib/v2/backend"
 	"github.com/integration-system/isp-lib/v2/bootstrap"
@@ -26,7 +27,7 @@ var version = "1.0.0"
 
 // @license.name GNU GPL v3.0
 
-// @host localhost:9024
+// @host localhost:9000
 // @BasePath /api/script
 
 func main() {
@@ -69,8 +70,7 @@ func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
 }
 
 func onLocalConfigLoad(cfg *conf.Configuration) {
-	//nolint
-	msgSize := 1024 * 1024 * 512
+	const msgSize = 1024 * 1024 * 512
 	metric.InitProfiling(cfg.ModuleName)
 	handlers := helper.GetAllHandlers()
 	service := backend.GetDefaultService(cfg.ModuleName, handlers...)

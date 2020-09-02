@@ -2,10 +2,11 @@ package script
 
 import (
 	"errors"
-	"isp-script-service/conf"
-	"isp-script-service/router"
 	"sync"
 	"time"
+
+	"isp-script-service/conf"
+	"isp-script-service/router"
 
 	"github.com/dop251/goja"
 	"github.com/integration-system/isp-lib/v2/config"
@@ -35,13 +36,12 @@ func (*Goja) Compile(script string) (Script, error) {
 	return &GojaProgram{prog: prog}, nil
 }
 
-var errUnknownEngine = errors.New("unknown engine")
-
 func (*Goja) Execute(program Script, arg interface{}) (interface{}, error) {
 	value, ok := program.Src().(*goja.Program)
 
 	if !ok {
-		return nil, errUnknownEngine
+		//nolint:goerr113
+		return nil, errors.New("unknown engine")
 	}
 
 	vm := pool.Get().(*goja.Runtime)
