@@ -8,10 +8,8 @@ import (
 	md "google.golang.org/grpc/metadata"
 )
 
-var (
-	Client = backend.NewRxGrpcClient(
-		backend.WithDialOptions(grpc.WithInsecure()),
-	)
+var Client = backend.NewRxGrpcClient(
+	backend.WithDialOptions(grpc.WithInsecure()),
 )
 
 func Invoke(methodPath string, request interface{}, metadata map[string]interface{}) (interface{}, error) {

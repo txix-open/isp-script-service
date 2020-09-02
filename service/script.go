@@ -5,15 +5,16 @@ import (
 	"sync"
 	"sync/atomic"
 
+	log_code "isp-script-service/codes"
+	"isp-script-service/conf"
+	"isp-script-service/domain"
+	"isp-script-service/script"
+
 	"github.com/integration-system/isp-lib/v2/config"
 	log "github.com/integration-system/isp-log"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	log_code "isp-script-service/codes"
-	"isp-script-service/conf"
-	"isp-script-service/domain"
-	"isp-script-service/script"
 )
 
 var Script = &scriptService{}
@@ -28,6 +29,7 @@ func (s *scriptService) ReceiveConfiguration(scriptDef []conf.ScriptDefinition) 
 		scr, err := s.Create(value.Script)
 		if err != nil {
 			log.Errorf(log_code.CreateScriptFromConfigError, "create script from config (number %d): %v", i, err)
+
 			continue
 		}
 		newStore[value.Id] = scr
@@ -40,6 +42,7 @@ func (s *scriptService) Execute(req domain.ExecuteRequest) *domain.ScriptResp {
 	if err != nil {
 		return s.respError(err, domain.ErrorCompile)
 	}
+
 	return s.executeScript(scr, req.Arg)
 }
 
@@ -48,6 +51,7 @@ func (s *scriptService) ExecuteById(req domain.ExecuteByIdRequest) (*domain.Scri
 	if scr == nil {
 		return nil, status.Errorf(codes.NotFound, "not defined script for id %s", req.Id)
 	}
+
 	return s.executeScript(scr, req.Arg), nil
 }
 
@@ -67,6 +71,7 @@ func (s *scriptService) BatchExecute(req []domain.ExecuteByIdRequest) []domain.S
 		}(i)
 	}
 	wg.Wait()
+
 	return response
 }
 
@@ -86,14 +91,18 @@ func (s *scriptService) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []
 		}(i)
 	}
 	wg.Wait()
+
 	return response
 }
 
 func (*scriptService) Create(scr string) (script.Script, error) {
 	cfg := config.GetRemote().(*conf.RemoteConfig)
 	scr = fmt.Sprintf("%s%s%s%s", cfg.SharedScript, "(function() {", scr, "})();")
+
 	return script.Default().Compile(scr)
 }
+
+var errEmpty = errors.New("empty answer, maybe lost return")
 
 func (s *scriptService) executeScript(scr script.Script, arg interface{}) *domain.ScriptResp {
 	response, err := script.Default().Execute(scr, arg)
@@ -101,8 +110,9 @@ func (s *scriptService) executeScript(scr script.Script, arg interface{}) *domai
 		return s.respError(err, domain.ErrorRunTime)
 	}
 	if response == nil {
-		return s.respError(errors.New("empty answer, maybe lost return"), domain.ErrorRunTime)
+		return s.respError(errEmpty, domain.ErrorRunTime)
 	}
+
 	return &domain.ScriptResp{
 		Result: response,
 	}
@@ -113,6 +123,7 @@ func (*scriptService) respError(err error, errorType string) *domain.ScriptResp 
 		Type:        errorType,
 		Description: err.Error(),
 	}
+
 	return &domain.ScriptResp{
 		Error: &respError,
 	}

@@ -1,4 +1,4 @@
-package adapter
+package adapter_test
 
 import (
 	"encoding/json"
@@ -7,14 +7,16 @@ import (
 	"os"
 	"testing"
 
-	"github.com/integration-system/isp-lib/v2/config"
-	jsoniter "github.com/json-iterator/go"
-	"github.com/stretchr/testify/assert"
+	"isp-script-service/adapter"
 	"isp-script-service/conf"
 	"isp-script-service/controller"
 	"isp-script-service/domain"
 	"isp-script-service/script"
 	"isp-script-service/service"
+
+	"github.com/integration-system/isp-lib/v2/config"
+	jsoniter "github.com/json-iterator/go"
+	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -29,8 +31,10 @@ const (
 	scriptFile = "custom_date.js"
 )
 
-var data map[string]interface{}
-var request = domain.ExecuteRequest{}
+var (
+	data    map[string]interface{}
+	request = domain.ExecuteRequest{}
+)
 
 func init() {
 	config.InitRemoteConfig(&conf.RemoteConfig{}, []byte(remoteConf))
@@ -68,7 +72,7 @@ func TestCustomDate(t *testing.T) {
 	}
 	executeResult, _ := json.Marshal(execute.Result)
 
-	customDate := getCustomData(data, id, version)
+	customDate := adapter.GetCustomData(data, id, version)
 	customDateResult, _ := json.Marshal(customDate)
 
 	if !a.Equal(string(customDateResult), string(executeResult)) {
@@ -78,9 +82,7 @@ func TestCustomDate(t *testing.T) {
 
 func BenchmarkGoCustomData(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		_ = getCustomData(data, id, version)
-		//json.Marshal(customDate)
-
+		_ = adapter.GetCustomData(data, id, version)
 	}
 }
 
@@ -134,7 +136,6 @@ func BenchmarkJsoniterJson(b *testing.B) {
 			panic(err)
 		}
 	}
-
 }
 
 func readFile(name string) ([]byte, error) {
@@ -148,5 +149,6 @@ func readFile(name string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return obj, nil
 }
