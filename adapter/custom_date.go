@@ -102,9 +102,9 @@ func expandArrayWithMapping(
 				continue
 			} else if docTypeStr, ok := docType.(string); !ok {
 				continue
-			} else if v, ok := mapping[docTypeStr]; !ok {
+			} else if v, ok := mapping[docTypeStr]; ok {
 				putDoc(documents, v, d)
-			} else if v, ok := mapping[allOtherValues]; !ok {
+			} else if v, ok := mapping[allOtherValues]; ok {
 				putDoc(documents, v, d)
 			}
 		}
