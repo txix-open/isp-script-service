@@ -3,7 +3,6 @@ module isp-script-service
 go 1.13
 
 require (
-	github.com/asaskevich/govalidator v0.0.0-20200108200545-475eaeb16496 // indirect
 	github.com/dlclark/regexp2 v1.2.0 // indirect
 	github.com/dop251/goja v0.0.0-20200526165454-f1752421c432
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
