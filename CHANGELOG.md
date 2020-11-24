@@ -1,3 +1,6 @@
+### v2.4.1
+* updated isp-lib
+* updated isp-event-lib
 ### V2.4.0
 * added swagger docs
 * updated to new isp-lib (v2.6.1)
