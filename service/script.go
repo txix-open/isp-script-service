@@ -26,16 +26,22 @@ type scriptService struct {
 	scriptEngine *scripts.Engine
 }
 
+type CompiledScript struct {
+	scripts.Script
+	Compiled bool
+}
+
 func (s *scriptService) ReceiveConfiguration(scriptDef []conf.ScriptDefinition) {
-	newStore := make(map[string]scripts.Script)
+	var compiled bool
+	newStore := make(map[string]CompiledScript)
 	for i, value := range scriptDef {
+		compiled = true
 		scr, err := s.Create(value.Script)
 		if err != nil {
 			log.Errorf(log_code.CreateScriptFromConfigError, "create script from config (number %d): %v", i, err)
-
-			continue
+			compiled = false
 		}
-		newStore[value.Id] = scr
+		newStore[value.Id] = CompiledScript{scr, compiled}
 	}
 	s.store.Store(newStore)
 }
@@ -46,11 +52,11 @@ func (s *scriptService) Execute(req domain.ExecuteRequest) *domain.ScriptResp {
 		return s.respError(err, domain.ErrorCompile)
 	}
 
-	return s.executeScript(scr, req.Arg)
+	return s.executeScript(CompiledScript{scr, true}, req.Arg)
 }
 
 func (s *scriptService) ExecuteById(req domain.ExecuteByIdRequest) (*domain.ScriptResp, error) {
-	scr, ok := s.store.Load().(map[string]scripts.Script)[req.Id]
+	scr, ok := s.store.Load().(map[string]CompiledScript)[req.Id]
 	if !ok {
 		return nil, status.Errorf(codes.NotFound, "not defined script for id %s", req.Id)
 	}
@@ -60,7 +66,7 @@ func (s *scriptService) ExecuteById(req domain.ExecuteByIdRequest) (*domain.Scri
 
 func (s *scriptService) BatchExecute(req []domain.ExecuteByIdRequest) []domain.ScriptResp {
 	wg := sync.WaitGroup{}
-	store := s.store.Load().(map[string]scripts.Script)
+	store := s.store.Load().(map[string]CompiledScript)
 	response := make([]domain.ScriptResp, len(req))
 	for i := range req {
 		wg.Add(1)
@@ -80,7 +86,7 @@ func (s *scriptService) BatchExecute(req []domain.ExecuteByIdRequest) []domain.S
 
 func (s *scriptService) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []domain.ScriptResp {
 	wg := sync.WaitGroup{}
-	store := s.store.Load().(map[string]scripts.Script)
+	store := s.store.Load().(map[string]CompiledScript)
 	response := make([]domain.ScriptResp, len(req.Ids))
 	for i := range req.Ids {
 		wg.Add(1)
@@ -107,9 +113,13 @@ func (*scriptService) Create(scr string) (scripts.Script, error) {
 
 var errEmpty = errors.New("empty answer, maybe lost return")
 
-func (s *scriptService) executeScript(scr scripts.Script, arg interface{}) *domain.ScriptResp {
+func (s *scriptService) executeScript(scr CompiledScript, arg interface{}) *domain.ScriptResp {
+	if !scr.Compiled {
+		return s.respError(errors.New("invalid script configuration"), domain.ErrorCompile)
+	}
+
 	cfg := config.GetRemote().(*conf.RemoteConfig)
-	response, err := s.scriptEngine.Execute(scr, arg,
+	response, err := s.scriptEngine.Execute(scr.Script, arg,
 		scripts.WithScriptTimeout(time.Duration(cfg.ScriptExecutionTimeoutMs)*time.Millisecond))
 	if err != nil {
 		return s.respError(err, domain.ErrorRunTime)
