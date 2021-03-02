@@ -5,16 +5,16 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/integration-system/isp-lib/v2/scripts"
-	log_code "isp-script-service/codes"
-	"isp-script-service/conf"
-	"isp-script-service/domain"
-
 	"github.com/integration-system/isp-lib/v2/config"
+	"github.com/integration-system/isp-lib/v2/scripts"
 	log "github.com/integration-system/isp-log"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	log_code "isp-script-service/codes"
+	"isp-script-service/conf"
+	"isp-script-service/domain"
+	"isp-script-service/router"
 )
 
 var Script = &scriptService{
@@ -120,7 +120,9 @@ func (s *scriptService) executeScript(scr CompiledScript, arg interface{}) *doma
 
 	cfg := config.GetRemote().(*conf.RemoteConfig)
 	response, err := s.scriptEngine.Execute(scr.Script, arg,
-		scripts.WithScriptTimeout(time.Duration(cfg.ScriptExecutionTimeoutMs)*time.Millisecond))
+		scripts.WithScriptTimeout(time.Duration(cfg.ScriptExecutionTimeoutMs)*time.Millisecond),
+		scripts.WithSet("invoke", router.Invoke),
+	)
 	if err != nil {
 		return s.respError(err, domain.ErrorRunTime)
 	}
