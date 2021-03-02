@@ -58,7 +58,7 @@ definitions:
 host: localhost:9000
 info:
   contact: {}
-  description: Сервис для обработка и выполения JavaScript скриптов
+  description: Сервис для обработки и выполнения JavaScript скриптов
   license:
     name: GNU GPL v3.0
   title: isp-script-service
@@ -70,7 +70,7 @@ paths:
       - application/json
       description: Возвращает результат выполнения скриптов и ошибок (если есть)
       parameters:
-      - description: Набор идентфикаторов и аргументов
+      - description: Набор идентификаторов и аргументов
         in: body
         name: body
         required: true
@@ -96,7 +96,7 @@ paths:
       - application/json
       description: Возвращает результат выполнения скриптов и ошибок (если есть)
       parameters:
-      - description: Набор идентфикаторов и единый аргумент
+      - description: Набор идентификаторов и единый аргумент
         in: body
         name: body
         required: true
@@ -111,7 +111,8 @@ paths:
             items:
               $ref: '#/definitions/domain.ScriptResp'
             type: array
-      summary: Выполнить набор скриптов под конкретными ID с идентичным аргументом для всех
+      summary: Выполнить набор скриптов под конкретными ID с идентичным аргументом
+        для всех
       tags:
       - script
   /script/execute:
@@ -142,7 +143,7 @@ paths:
       - application/json
       description: Возвращает результат выполнения скрипта и ошибку (если есть)
       parameters:
-      - description: Идентифиактор скрипта
+      - description: идентификатор скрипта
         in: body
         name: body
         required: true
@@ -159,7 +160,7 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/structure.GrpcError'
-      summary: Выполнить скрипт под конкректным ID
+      summary: Выполнить скрипт под конкретным ID
       tags:
       - script
 swagger: "2.0"

@@ -1,3 +1,5 @@
+### v2.5.4
+* fix: added missing "invoke" function to scripts
 ### v2.5.3
 * added "invalid script configuration" error instead of "404:Not Found" error when invalid script was requested.
 ### v2.5.2
