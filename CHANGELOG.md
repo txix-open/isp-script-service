@@ -1,3 +1,5 @@
+### v2.5.6
+* updated dependencies
 ### v2.5.5
 * add new functions for scripts: sha256, sha512, generate UUIDv4
 ### v2.5.4
