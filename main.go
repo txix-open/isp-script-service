@@ -67,7 +67,7 @@ func onShutdown(_ context.Context, _ os.Signal) {
 }
 
 func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
-	service.Script.ReceiveConfiguration(remoteConfig.Scripts)
+	service.Script.ReceiveConfiguration(remoteConfig.Scripts, remoteConfig.SharedScript, remoteConfig.ScriptExecutionTimeoutMs)
 	metric.InitCollectors(remoteConfig.Metrics, oldRemoteConfig.Metrics)
 	metric.InitHttpServer(remoteConfig.Metrics)
 }

@@ -1,3 +1,5 @@
+### v2.5.7
+* fix receiving new configuration
 ### v2.5.6
 * updated dependencies
 ### v2.5.5
