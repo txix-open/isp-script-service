@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/integration-system/isp-lib/v2/config"
 	"github.com/integration-system/isp-lib/v2/scripts"
 	log "github.com/integration-system/isp-log"
 	"github.com/pkg/errors"
@@ -30,56 +29,68 @@ type scriptService struct {
 	scriptEngine *scripts.Engine
 }
 
+type scriptServiceCfg struct {
+	Scripts          map[string]CompiledScript
+	ExecutionTimeout time.Duration
+	SharedScript     string
+}
+
 type CompiledScript struct {
 	scripts.Script
 	Compiled bool
 }
 
-func (s *scriptService) ReceiveConfiguration(scriptDef []conf.ScriptDefinition) {
+func (s *scriptService) ReceiveConfiguration(scriptDef []conf.ScriptDefinition, sharedScript string, executionTimeoutMs int) {
 	var compiled bool
-	newStore := make(map[string]CompiledScript)
+	cfg := &scriptServiceCfg{
+		Scripts:          make(map[string]CompiledScript),
+		ExecutionTimeout: time.Duration(executionTimeoutMs) * time.Millisecond,
+		SharedScript:     sharedScript,
+	}
 	for i, value := range scriptDef {
 		compiled = true
-		scr, err := s.Create(value.Script)
+		scr, err := s.Create(value.Script, sharedScript)
 		if err != nil {
 			log.Errorf(log_code.CreateScriptFromConfigError, "create script from config (number %d): %v", i, err)
 			compiled = false
 		}
-		newStore[value.Id] = CompiledScript{scr, compiled}
+		cfg.Scripts[value.Id] = CompiledScript{scr, compiled}
 	}
-	s.store.Store(newStore)
+	s.store.Store(cfg)
 }
 
 func (s *scriptService) Execute(req domain.ExecuteRequest) *domain.ScriptResp {
-	scr, err := s.Create(req.Script)
+	cfg := s.loadCfg()
+	scr, err := s.Create(req.Script, cfg.SharedScript)
 	if err != nil {
 		return s.respError(err, domain.ErrorCompile)
 	}
 
-	return s.executeScript(CompiledScript{scr, true}, req.Arg)
+	return s.executeScript(CompiledScript{scr, true}, req.Arg, cfg.ExecutionTimeout)
 }
 
 func (s *scriptService) ExecuteById(req domain.ExecuteByIdRequest) (*domain.ScriptResp, error) {
-	scr, ok := s.store.Load().(map[string]CompiledScript)[req.Id]
+	cfg := s.loadCfg()
+	scr, ok := cfg.Scripts[req.Id]
 	if !ok {
 		return nil, status.Errorf(codes.NotFound, "not defined script for id %s", req.Id)
 	}
 
-	return s.executeScript(scr, req.Arg), nil
+	return s.executeScript(scr, req.Arg, cfg.ExecutionTimeout), nil
 }
 
 func (s *scriptService) BatchExecute(req []domain.ExecuteByIdRequest) []domain.ScriptResp {
 	wg := sync.WaitGroup{}
-	store := s.store.Load().(map[string]CompiledScript)
+	cfg := s.loadCfg()
 	response := make([]domain.ScriptResp, len(req))
 	for i := range req {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
-			if scr, ok := store[req[i].Id]; !ok {
+			if scr, ok := cfg.Scripts[req[i].Id]; !ok {
 				response[i] = *s.respError(errors.Errorf("not defined script for id %s", req[i].Id), domain.ErrorCompile)
 			} else {
-				response[i] = *s.executeScript(scr, req[i].Arg)
+				response[i] = *s.executeScript(scr, req[i].Arg, cfg.ExecutionTimeout)
 			}
 		}(i)
 	}
@@ -90,16 +101,16 @@ func (s *scriptService) BatchExecute(req []domain.ExecuteByIdRequest) []domain.S
 
 func (s *scriptService) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []domain.ScriptResp {
 	wg := sync.WaitGroup{}
-	store := s.store.Load().(map[string]CompiledScript)
+	cfg := s.loadCfg()
 	response := make([]domain.ScriptResp, len(req.Ids))
 	for i := range req.Ids {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
-			if scr, ok := store[req.Ids[i]]; !ok {
+			if scr, ok := cfg.Scripts[req.Ids[i]]; !ok {
 				response[i] = *s.respError(errors.Errorf("not defined script for id %s", req.Ids[i]), domain.ErrorCompile)
 			} else {
-				response[i] = *s.executeScript(scr, req.Arg)
+				response[i] = *s.executeScript(scr, req.Arg, cfg.ExecutionTimeout)
 			}
 		}(i)
 	}
@@ -108,23 +119,20 @@ func (s *scriptService) BatchExecuteById(req domain.BatchExecuteByIdsRequest) []
 	return response
 }
 
-func (*scriptService) Create(scr string) (scripts.Script, error) {
-	cfg := config.GetRemote().(*conf.RemoteConfig)
-
-	return scripts.NewScript([]byte(cfg.SharedScript),
-		[]byte("(function() {\n"), []byte(scr), []byte("\n})();"))
+func (*scriptService) Create(script, sharedScript string) (scripts.Script, error) {
+	return scripts.NewScript([]byte(sharedScript),
+		[]byte("(function() {\n"), []byte(script), []byte("\n})();"))
 }
 
 var errEmpty = errors.New("empty answer, maybe lost return")
 
-func (s *scriptService) executeScript(scr CompiledScript, arg interface{}) *domain.ScriptResp {
+func (s *scriptService) executeScript(scr CompiledScript, arg interface{}, timeout time.Duration) *domain.ScriptResp {
 	if !scr.Compiled {
 		return s.respError(errors.New("invalid script configuration"), domain.ErrorCompile)
 	}
 
-	cfg := config.GetRemote().(*conf.RemoteConfig)
 	response, err := s.scriptEngine.Execute(scr.Script, arg,
-		scripts.WithScriptTimeout(time.Duration(cfg.ScriptExecutionTimeoutMs)*time.Millisecond),
+		scripts.WithScriptTimeout(timeout),
 		// TODO: remove. invoke is deprecated, all functions should be inside `external` object
 		scripts.WithSet("invoke", router.Invoke),
 		scripts.WithSet("external", map[string]interface{}{
@@ -155,6 +163,10 @@ func (*scriptService) respError(err error, errorType string) *domain.ScriptResp 
 	return &domain.ScriptResp{
 		Error: &respError,
 	}
+}
+
+func (s *scriptService) loadCfg() *scriptServiceCfg {
+	return s.store.Load().(*scriptServiceCfg)
 }
 
 func Sha256(value string) string {
