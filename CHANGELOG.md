@@ -1,3 +1,6 @@
+### v2.5.8
+* updated dependencies
+* migrated to common local config
 ### v2.5.7
 * fix receiving new configuration
 ### v2.5.6
