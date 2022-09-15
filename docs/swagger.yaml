@@ -36,15 +36,7 @@ definitions:
     required:
     - script
     type: object
-  domain.ScriptResp:
-    properties:
-      error:
-        $ref: '#/definitions/domain.Error'
-        type: object
-      result:
-        type: object
-    type: object
-  structure.GrpcError:
+  domain.GrpcError:
     properties:
       details:
         items:
@@ -54,6 +46,13 @@ definitions:
         type: string
       errorMessage:
         type: string
+    type: object
+  domain.ScriptResp:
+    properties:
+      error:
+        $ref: '#/definitions/domain.Error'
+      result:
+        type: object
     type: object
 host: localhost:9000
 info:
@@ -159,7 +158,7 @@ paths:
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/structure.GrpcError'
+            $ref: '#/definitions/domain.GrpcError'
       summary: Выполнить скрипт под конкретным ID
       tags:
       - script
