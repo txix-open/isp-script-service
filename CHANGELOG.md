@@ -1,3 +1,8 @@
+### v3.0.0
+* миграция сервиса на isp-kit
+* миграция на версию GO 1.19.1
+* обновлен формат логов в json
+* обновлена библиотека goja, добавлена поддержка ES6 синтаксиса
 ### v2.5.8
 * updated dependencies
 * migrated to common local config
