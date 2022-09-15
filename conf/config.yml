@@ -8,3 +8,10 @@ grpcInnerAddress:
   ip: 0.0.0.0
   port: 9024
 moduleName: script
+infraServerPort: 9574
+
+logfile:
+  path: /var/log/isp-script-service/runtime.log
+  maxSizeMb: 512
+  maxBackups: 4
+  compress: true
