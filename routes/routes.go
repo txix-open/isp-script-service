@@ -27,25 +27,25 @@ func Handler(wrapper endpoint.Wrapper, c Controllers) isp.BackendServiceServer {
 func endpointDescriptors(c Controllers) []cluster.EndpointDescriptor {
 	return []cluster.EndpointDescriptor{
 		{
-			Path:             "script/execute",
+			Path:             "script/script/execute",
 			Inner:            true,
 			UserAuthRequired: false,
 			Handler:          c.Script.Execute,
 		},
 		{
-			Path:             "script/batch_execute",
+			Path:             "script/script/batch_execute",
 			Inner:            true,
 			UserAuthRequired: false,
 			Handler:          c.Script.BatchExecute,
 		},
 		{
-			Path:             "script/execute_by_id",
+			Path:             "script/script/execute_by_id",
 			Inner:            true,
 			UserAuthRequired: false,
 			Handler:          c.Script.ExecuteById,
 		},
 		{
-			Path:             "script/batch_execute_by_ids",
+			Path:             "script/script/batch_execute_by_ids",
 			Inner:            true,
 			UserAuthRequired: false,
 			Handler:          c.Script.BatchExecuteById,
