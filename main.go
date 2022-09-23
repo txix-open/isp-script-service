@@ -1,23 +1,11 @@
 package main
 
 import (
-	"context"
-	"os"
-
+	"github.com/integration-system/isp-kit/bootstrap"
+	"github.com/integration-system/isp-kit/shutdown"
+	"isp-script-service/assembly"
 	"isp-script-service/conf"
-	_ "isp-script-service/docs"
-	"isp-script-service/helper"
-	"isp-script-service/router"
-	"isp-script-service/service"
-
-	"github.com/integration-system/isp-lib/v2/backend"
-	"github.com/integration-system/isp-lib/v2/bootstrap"
-	"github.com/integration-system/isp-lib/v2/config/schema"
-	"github.com/integration-system/isp-lib/v2/metric"
-	"github.com/integration-system/isp-lib/v2/structure"
-	log "github.com/integration-system/isp-log"
-	"github.com/integration-system/isp-log/stdcodes"
-	"google.golang.org/grpc"
+	"isp-script-service/routes"
 )
 
 var version = "1.0.0"
@@ -33,73 +21,28 @@ var version = "1.0.0"
 
 //go:generate swag init --parseDependency
 //go:generate rm -f docs/swagger.json
+
 func main() {
-	bootstrap.
-		ServiceBootstrap(&conf.Configuration{}, &conf.RemoteConfig{}).
-		OnLocalConfigLoad(onLocalConfigLoad).
-		SocketConfiguration(socketConfiguration).
-		DefaultRemoteConfigPath(schema.ResolveDefaultConfigPath("default_remote_config.json")).
-		OnSocketErrorReceive(onRemoteErrorReceive).
-		OnConfigErrorReceive(onRemoteConfigErrorReceive).
-		DeclareMe(routesData).
-		RequireModule("router", router.Client.ReceiveAddressList, true).
-		OnRemoteConfigReceive(onRemoteConfigReceive).
-		OnShutdown(onShutdown).
-		Run()
-}
+	boot := bootstrap.New(version, conf.Remote{}, routes.EndpointDescriptors())
+	app := boot.App
+	logger := app.Logger()
 
-func socketConfiguration(cfg interface{}) structure.SocketConfiguration {
-	appConfig := cfg.(*conf.Configuration)
-
-	return structure.SocketConfiguration{
-		Host:   appConfig.ConfigServiceAddress.IP,
-		Port:   appConfig.ConfigServiceAddress.Port,
-		Secure: false,
-		UrlParams: map[string]string{
-			"module_name": appConfig.ModuleName,
-		},
+	assembly, err := assembly.New(boot)
+	if err != nil {
+		logger.Fatal(app.Context(), err)
 	}
-}
+	app.AddRunners(assembly.Runners()...)
+	app.AddClosers(assembly.Closers()...)
 
-func onShutdown(_ context.Context, _ os.Signal) {
-	backend.StopGrpcServer()
-}
+	shutdown.On(func() {
+		logger.Info(app.Context(), "starting shutdown")
+		app.Shutdown()
+		logger.Info(app.Context(), "shutdown completed")
+	})
 
-func onRemoteConfigReceive(remoteConfig, oldRemoteConfig *conf.RemoteConfig) {
-	service.Script.ReceiveConfiguration(remoteConfig.Scripts, remoteConfig.SharedScript, remoteConfig.ScriptExecutionTimeoutMs)
-	metric.InitCollectors(remoteConfig.Metrics, oldRemoteConfig.Metrics)
-	metric.InitHttpServer(remoteConfig.Metrics)
-}
-
-func onLocalConfigLoad(cfg *conf.Configuration) {
-	const msgSize = 1024 * 1024 * 512
-	metric.InitProfiling(cfg.ModuleName)
-	handlers := helper.GetAllHandlers()
-	service := backend.GetDefaultService(cfg.ModuleName, handlers...)
-	backend.StartBackendGrpcServer(
-		cfg.GrpcInnerAddress, service,
-		grpc.MaxRecvMsgSize(msgSize),
-		grpc.MaxSendMsgSize(msgSize),
-	)
-}
-
-func routesData(localConfig interface{}) bootstrap.ModuleInfo {
-	cfg := localConfig.(*conf.Configuration)
-
-	return bootstrap.ModuleInfo{
-		ModuleName:       cfg.ModuleName,
-		ModuleVersion:    version,
-		GrpcOuterAddress: cfg.GrpcOuterAddress,
-		Handlers:         helper.GetAllHandlers(),
+	err = app.Run()
+	if err != nil {
+		app.Shutdown()
+		logger.Fatal(app.Context(), err)
 	}
-}
-
-func onRemoteErrorReceive(errorMessage map[string]interface{}) {
-	log.WithMetadata(errorMessage).Error(stdcodes.ReceiveErrorFromConfig, "error from config service")
-}
-
-func onRemoteConfigErrorReceive(errorMessage string) {
-	log.WithMetadata(map[string]interface{}{
-		"message": errorMessage,
-	}).Error(stdcodes.ReceiveErrorOnGettingConfigFromConfig, "error on getting remote configuration")
 }

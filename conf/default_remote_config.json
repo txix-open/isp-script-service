@@ -1,15 +1,7 @@
 {
+  "logLevel": "debug",
   "scripts": [
   ],
   "sharedScript": "",
-  "scriptExecutionTimeoutMs": 1000,
-  "metrics": {
-    "gc": true,
-    "memory": true,
-    "address": {
-      "port": "9574",
-      "ip": "0.0.0.0",
-      "path": "/metrics"
-    }
-  }
+  "scriptExecutionTimeoutMs": 1000
 }
