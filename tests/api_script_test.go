@@ -58,7 +58,7 @@ func (s *ApiScript) TestExternalInvoke() {
 		Arg:    struct{}{},
 	}
 	res := domain.ScriptResp{}
-	err := s.apiCli.Invoke("script/execute").
+	err := s.apiCli.Invoke("script/script/execute").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
@@ -74,7 +74,7 @@ func (s *ApiScript) TestExecuteHappyPath() {
 		},
 	}
 	res := domain.ScriptResp{}
-	err := s.apiCli.Invoke("script/execute").
+	err := s.apiCli.Invoke("script/script/execute").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
@@ -88,7 +88,7 @@ func (s *ApiScript) TestExecuteByIdHappyPath() {
 		Arg: struct{}{},
 	}
 	res := domain.ScriptResp{}
-	err := s.apiCli.Invoke("script/execute_by_id").
+	err := s.apiCli.Invoke("script/script/execute_by_id").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
@@ -102,7 +102,7 @@ func (s *ApiScript) TestExecuteByIdNotFound() {
 		Arg: struct{}{},
 	}
 	res := domain.ScriptResp{}
-	err := s.apiCli.Invoke("script/execute_by_id").
+	err := s.apiCli.Invoke("script/script/execute_by_id").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
@@ -124,7 +124,7 @@ func (s *ApiScript) TestBatchExecuteHappyPath() {
 		},
 	}
 	res := make([]domain.ScriptResp, 0)
-	err := s.apiCli.Invoke("script/batch_execute").
+	err := s.apiCli.Invoke("script/script/batch_execute").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
@@ -148,7 +148,7 @@ func (s *ApiScript) TestBatchExecuteMixedNotFound() {
 		},
 	}
 	res := make([]domain.ScriptResp, 0)
-	err := s.apiCli.Invoke("script/batch_execute").
+	err := s.apiCli.Invoke("script/script/batch_execute").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
@@ -169,7 +169,7 @@ func (s *ApiScript) TestBatchExecuteByIdHappyPath() {
 		Arg: struct{}{},
 	}
 	res := make([]domain.ScriptResp, 0)
-	err := s.apiCli.Invoke("script/batch_execute_by_ids").
+	err := s.apiCli.Invoke("script/script/batch_execute_by_ids").
 		JsonRequestBody(req).
 		ReadJsonResponse(&res).
 		Do(context.Background())
