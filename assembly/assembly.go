@@ -60,7 +60,7 @@ func (a *Assembly) ReceiveConfig(ctx context.Context, remoteConfig []byte) error
 
 func (a *Assembly) Runners() []app.Runner {
 	eventHandler := cluster.NewEventHandler().
-		RequireModule("repository", a.router).
+		RequireModule("router", a.router).
 		RemoteConfigReceiver(a)
 	return []app.Runner{
 		app.RunnerFunc(func(ctx context.Context) error {
