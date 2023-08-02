@@ -8,6 +8,7 @@ import (
 	"github.com/integration-system/jsonschema"
 )
 
+// nolint:gochecknoinits
 func init() {
 	schema.CustomGenerators.Register("logLevel", func(field reflect.StructField, t *jsonschema.Type) {
 		t.Type = "string"

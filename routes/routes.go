@@ -1,3 +1,4 @@
+// nolint:ireturn
 package routes
 
 import (

@@ -1,4 +1,4 @@
-package tests
+package tests_test
 
 import (
 	"context"
@@ -17,6 +17,7 @@ import (
 )
 
 func TestApiScriptTestSuite(t *testing.T) {
+	t.Parallel()
 	suite.Run(t, &ApiScript{})
 }
 
@@ -60,7 +61,7 @@ func (s *ApiScript) TestExternalInvoke() {
 	res := domain.ScriptResp{}
 	err := s.apiCli.Invoke("script/script/execute").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
 	s.Require().Equal(res.Result, true)
@@ -76,7 +77,7 @@ func (s *ApiScript) TestExecuteHappyPath() {
 	res := domain.ScriptResp{}
 	err := s.apiCli.Invoke("script/script/execute").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
 	s.Require().Equal(res.Result, true)
@@ -90,7 +91,7 @@ func (s *ApiScript) TestExecuteByIdHappyPath() {
 	res := domain.ScriptResp{}
 	err := s.apiCli.Invoke("script/script/execute_by_id").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
 	s.Require().Equal(res.Result, true)
@@ -104,7 +105,7 @@ func (s *ApiScript) TestExecuteByIdNotFound() {
 	res := domain.ScriptResp{}
 	err := s.apiCli.Invoke("script/script/execute_by_id").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().Error(err)
 	st, ok := status.FromError(err)
@@ -126,7 +127,7 @@ func (s *ApiScript) TestBatchExecuteHappyPath() {
 	res := make([]domain.ScriptResp, 0)
 	err := s.apiCli.Invoke("script/script/batch_execute").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
 	expected := []domain.ScriptResp{
@@ -150,7 +151,7 @@ func (s *ApiScript) TestBatchExecuteMixedNotFound() {
 	res := make([]domain.ScriptResp, 0)
 	err := s.apiCli.Invoke("script/script/batch_execute").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
 	expected := []domain.ScriptResp{
@@ -171,7 +172,7 @@ func (s *ApiScript) TestBatchExecuteByIdHappyPath() {
 	res := make([]domain.ScriptResp, 0)
 	err := s.apiCli.Invoke("script/script/batch_execute_by_ids").
 		JsonRequestBody(req).
-		ReadJsonResponse(&res).
+		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
 	expected := []domain.ScriptResp{

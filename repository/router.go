@@ -29,7 +29,7 @@ func (i Router) Invoke(methodPath string, request interface{}, metadata map[stri
 
 	var response interface{}
 
-	err := i.cli.Invoke(methodPath).JsonRequestBody(request).ReadJsonResponse(&response).Do(ctx)
+	err := i.cli.Invoke(methodPath).JsonRequestBody(request).JsonResponseBody(&response).Do(ctx)
 	if err != nil {
 		return nil, errors.WithMessage(err, "invoke")
 	}
