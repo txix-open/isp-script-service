@@ -1,3 +1,4 @@
+// nolint:wrapcheck
 package service
 
 import (
@@ -118,7 +119,8 @@ func (s *Script) executeScript(scr CompiledScript, arg interface{}, timeout time
 	}
 
 	response, err := s.scriptEngine.Execute(scr.Script, arg,
-		scripts.WithScriptTimeout(timeout),
+		scripts.WithTimeout(timeout),
+		scripts.WithDefaultToolkit(),
 		scripts.WithSet("external", map[string]interface{}{
 			"invoke":         s.router.Invoke,
 			"hashSha256":     Sha256,

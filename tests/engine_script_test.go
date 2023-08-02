@@ -1,4 +1,5 @@
-package tests
+// nolint:gochecknoglobals
+package tests_test
 
 import (
 	json2 "encoding/json"
@@ -61,9 +62,10 @@ var (
 	expecting = make(map[string]interface{})
 )
 
+// nolint:gochecknoinits
 func init() {
 	for _, v := range recordsExample {
-		expecting[v["id_tp_cd"].(string)] = v
+		expecting[v["id_tp_cd"].(string)] = v // nolint:forcetypeassert
 	}
 	if bytes, err := json2.Marshal(recordsExample); err != nil {
 		panic(err)
@@ -73,6 +75,8 @@ func init() {
 }
 
 func TestOtto(t *testing.T) {
+	t.Parallel()
+
 	assert := assert.New(t)
 
 	prog, err := parser.ParseFile(nil, "example", jsScript, 0)
@@ -102,25 +106,33 @@ func TestOtto(t *testing.T) {
 }
 
 func TestGoja(t *testing.T) {
+	t.Parallel()
+
 	prog := goja.MustCompile("test.js", jsScript, false)
 	//
+	assert := assert.New(t)
+
 	runTime := goja.New()
-	runTime.Set("b", recordsExample)
-	_, err := runTime.RunProgram(prog)
-	if err != nil {
-		t.Fatal(err)
-	}
+	err := runTime.Set("b", recordsExample)
+	assert.NoError(err)
+
+	_, err = runTime.RunProgram(prog)
+	assert.NoError(err)
+
 	a := runTime.Get("a")
 	_ = a.Export()
 }
 
 func TestGopherLua(t *testing.T) {
+	t.Parallel()
+
 	assert := assert.New(t)
 
 	l := lua.NewState()
 	defer l.Close()
 
-	b, _ := json2.Marshal(recordsExample)
+	b, err := json2.Marshal(recordsExample)
+	assert.NoError(err)
 	val, err := json.Decode(l, b)
 	if !assert.NoError(err) {
 		return
@@ -179,11 +191,16 @@ func BenchmarkGoja(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		runTime := goja.New()
-		runTime.Set("b", recordsExample)
-		_, err := runTime.RunProgram(prog)
+		err := runTime.Set("b", recordsExample)
 		if err != nil {
 			return
 		}
+
+		_, err = runTime.RunProgram(prog)
+		if err != nil {
+			return
+		}
+
 		a := runTime.Get("a")
 		_ = a.Export()
 	}
