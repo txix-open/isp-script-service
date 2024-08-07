@@ -6,12 +6,12 @@ import (
 
 	stdgrpc "google.golang.org/grpc"
 
-	"github.com/integration-system/isp-kit/app"
-	"github.com/integration-system/isp-kit/bootstrap"
-	"github.com/integration-system/isp-kit/cluster"
-	"github.com/integration-system/isp-kit/grpc"
-	"github.com/integration-system/isp-kit/grpc/client"
-	"github.com/integration-system/isp-kit/log"
+	"github.com/txix-open/isp-kit/app"
+	"github.com/txix-open/isp-kit/bootstrap"
+	"github.com/txix-open/isp-kit/cluster"
+	"github.com/txix-open/isp-kit/grpc"
+	"github.com/txix-open/isp-kit/grpc/client"
+	"github.com/txix-open/isp-kit/log"
 	"github.com/pkg/errors"
 	"isp-script-service/conf"
 )

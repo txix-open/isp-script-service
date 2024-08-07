@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/integration-system/isp-kit/grpc/client"
-	"github.com/integration-system/isp-kit/test"
-	"github.com/integration-system/isp-kit/test/grpct"
+	"github.com/txix-open/isp-kit/grpc/client"
+	"github.com/txix-open/isp-kit/test"
+	"github.com/txix-open/isp-kit/test/grpct"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"google.golang.org/grpc/codes"

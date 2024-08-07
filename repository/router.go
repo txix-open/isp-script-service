@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/integration-system/isp-kit/grpc/client"
+	"github.com/txix-open/isp-kit/grpc/client"
 	"github.com/pkg/errors"
 	md "google.golang.org/grpc/metadata"
 )
