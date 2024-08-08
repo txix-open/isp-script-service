@@ -10,9 +10,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/integration-system/isp-kit/log"
-	"github.com/integration-system/isp-script"
 	"github.com/pkg/errors"
+	"github.com/txix-open/isp-kit/log"
+	"github.com/txix-open/isp-script"
 	"isp-script-service/conf"
 	"isp-script-service/domain"
 )

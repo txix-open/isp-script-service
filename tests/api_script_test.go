@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/integration-system/isp-kit/grpc/client"
-	"github.com/integration-system/isp-kit/test"
-	"github.com/integration-system/isp-kit/test/grpct"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
+	"github.com/txix-open/isp-kit/grpc/client"
+	"github.com/txix-open/isp-kit/test"
+	"github.com/txix-open/isp-kit/test/grpct"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"isp-script-service/assembly"
@@ -64,7 +64,7 @@ func (s *ApiScript) TestExternalInvoke() {
 		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
-	s.Require().Equal(res.Result, true)
+	s.Require().Equal(true, res.Result)
 }
 
 func (s *ApiScript) TestExecuteHappyPath() {
@@ -80,7 +80,7 @@ func (s *ApiScript) TestExecuteHappyPath() {
 		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
-	s.Require().Equal(res.Result, true)
+	s.Require().Equal(true, res.Result)
 }
 
 func (s *ApiScript) TestExecuteByIdHappyPath() {
@@ -94,7 +94,7 @@ func (s *ApiScript) TestExecuteByIdHappyPath() {
 		JsonResponseBody(&res).
 		Do(context.Background())
 	s.Require().NoError(err)
-	s.Require().Equal(res.Result, true)
+	s.Require().Equal(true, res.Result)
 }
 
 func (s *ApiScript) TestExecuteByIdNotFound() {

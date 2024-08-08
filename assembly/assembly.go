@@ -4,19 +4,15 @@ package assembly
 import (
 	"context"
 
-	stdgrpc "google.golang.org/grpc"
-
-	"github.com/integration-system/isp-kit/app"
-	"github.com/integration-system/isp-kit/bootstrap"
-	"github.com/integration-system/isp-kit/cluster"
-	"github.com/integration-system/isp-kit/grpc"
-	"github.com/integration-system/isp-kit/grpc/client"
-	"github.com/integration-system/isp-kit/log"
 	"github.com/pkg/errors"
+	"github.com/txix-open/isp-kit/app"
+	"github.com/txix-open/isp-kit/bootstrap"
+	"github.com/txix-open/isp-kit/cluster"
+	"github.com/txix-open/isp-kit/grpc"
+	"github.com/txix-open/isp-kit/grpc/client"
+	"github.com/txix-open/isp-kit/log"
 	"isp-script-service/conf"
 )
-
-const GrpcMaxRecvMsgSize = 64 * 1024 * 1024
 
 type Assembly struct {
 	boot   *bootstrap.Bootstrap
@@ -26,7 +22,7 @@ type Assembly struct {
 }
 
 func New(boot *bootstrap.Bootstrap) (*Assembly, error) {
-	server := grpc.NewServer(stdgrpc.MaxRecvMsgSize(GrpcMaxRecvMsgSize))
+	server := grpc.DefaultServer()
 	router, err := client.Default()
 	if err != nil {
 		return nil, errors.WithMessage(err, "create repository client")

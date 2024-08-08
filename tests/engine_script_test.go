@@ -2,14 +2,14 @@
 package tests_test
 
 import (
-	json2 "encoding/json"
+	json2 "github.com/txix-open/isp-kit/json"
 	"strings"
 	"testing"
 
 	"github.com/dop251/goja"
 	"github.com/robertkrimen/otto"
 	"github.com/robertkrimen/otto/parser"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	lua "github.com/yuin/gopher-lua"
 	"github.com/yuin/gopher-lua/parse"
 	json "layeh.com/gopher-json"
@@ -76,48 +76,37 @@ func init() {
 
 func TestOtto(t *testing.T) {
 	t.Parallel()
-
-	assert := assert.New(t)
+	require := require.New(t)
 
 	prog, err := parser.ParseFile(nil, "example", jsScript, 0)
-	if !assert.NoError(err) {
-		return
-	}
-	//
+	require.NoError(err)
+
 	runTime := otto.New()
 	err = runTime.Set("b", recordsExample)
-	if !assert.NoError(err) {
-		return
-	}
+	require.NoError(err)
 
 	_, err = runTime.Run(prog)
-	if !assert.NoError(err) {
-		return
-	}
+	require.NoError(err)
 
 	res, err := runTime.Get("a")
-	if !assert.NoError(err) {
-		return
-	}
+	require.NoError(err)
+
 	_, err = res.Export()
-	if !assert.NoError(err) {
-		return
-	}
+	require.NoError(err)
 }
 
 func TestGoja(t *testing.T) {
 	t.Parallel()
+	require := require.New(t)
 
 	prog := goja.MustCompile("test.js", jsScript, false)
-	//
-	assert := assert.New(t)
 
 	runTime := goja.New()
 	err := runTime.Set("b", recordsExample)
-	assert.NoError(err)
+	require.NoError(err)
 
 	_, err = runTime.RunProgram(prog)
-	assert.NoError(err)
+	require.NoError(err)
 
 	a := runTime.Get("a")
 	_ = a.Export()
@@ -125,36 +114,31 @@ func TestGoja(t *testing.T) {
 
 func TestGopherLua(t *testing.T) {
 	t.Parallel()
-
-	assert := assert.New(t)
+	require := require.New(t)
 
 	l := lua.NewState()
 	defer l.Close()
 
 	b, err := json2.Marshal(recordsExample)
-	assert.NoError(err)
+	require.NoError(err)
+
 	val, err := json.Decode(l, b)
-	if !assert.NoError(err) {
-		return
-	}
+	require.NoError(err)
+
 	l.SetGlobal("src", val)
 
-	//
 	err = l.DoString(luaScript)
-	if !assert.NoError(err) {
-		return
-	}
+	require.NoError(err)
+
 	dst := l.GetGlobal("dst")
 	b, err = json.Encode(dst)
-	if err != nil {
-		panic(err)
-	}
+	require.NoError(err)
+
 	m := make(map[string]interface{})
 	err = json2.Unmarshal(b, &m)
-	if !assert.NoError(err) {
-		return
-	}
-	assert.EqualValues(expecting, m)
+	require.NoError(err)
+
+	require.EqualValues(expecting, m)
 }
 
 func BenchmarkOtto(b *testing.B) {
