@@ -1,16 +1,16 @@
 package domain
 
 type ExecuteByIdRequest struct {
-	Id  string `valid:"required"`
+	Id  string `validate:"required"`
 	Arg interface{}
 }
 
 type ExecuteRequest struct {
-	Script string `valid:"required"`
+	Script string `validate:"required"`
 	Arg    interface{}
 }
 
 type BatchExecuteByIdsRequest struct {
-	Ids []string `valid:"required"`
+	Ids []string `validate:"required"`
 	Arg interface{}
 }

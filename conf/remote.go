@@ -20,7 +20,7 @@ type Remote struct {
 	LogLevel                 log.Level `schemaGen:"logLevel" schema:"Уровень логирования"`
 	Scripts                  []ScriptDefinition
 	SharedScript             string
-	ScriptExecutionTimeoutMs int `valid:"required"`
+	ScriptExecutionTimeoutMs int `validate:"required"`
 }
 
 type ScriptDefinition struct {
