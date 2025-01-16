@@ -48,7 +48,10 @@ func (a *Assembly) ReceiveConfig(ctx context.Context, remoteConfig []byte) error
 	a.logger.SetLevel(newCfg.LogLevel)
 
 	locator := NewLocator(a.logger, a.router)
-	handler := locator.Handler(newCfg)
+	handler, err := locator.Handler(newCfg)
+	if err != nil {
+		a.logger.Fatal(ctx, errors.WithMessage(err, "new handler"))
+	}
 
 	a.server.Upgrade(handler)
 

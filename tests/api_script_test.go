@@ -35,20 +35,23 @@ func (s *ApiScript) SetupSuite() {
 
 	cfg := conf.Remote{
 		ScriptExecutionTimeoutMs: 10000,
-		Scripts: []conf.ScriptDefinition{
-			{
-				Id:     "1",
-				Script: "return true",
+		Scripts: conf.AllScripts{
+			CommonScripts: []conf.ScriptDefinition{
+				{
+					Id:     "1",
+					Script: "return true",
+				},
+				{
+					Id:     "2",
+					Script: "return false",
+				},
 			},
-			{
-				Id:     "2",
-				Script: "return false",
-			},
+			CustomScripts: []conf.ScriptDefinition{},
 		},
 	}
 
 	locator := assembly.NewLocator(s.test.Logger(), cli)
-	handler := locator.Handler(cfg)
+	handler, _ := locator.Handler(cfg)
 
 	_, s.apiCli = grpct.TestServer(s.test, handler)
 }

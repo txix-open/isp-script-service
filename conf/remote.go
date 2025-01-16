@@ -18,9 +18,14 @@ func init() {
 
 type Remote struct {
 	LogLevel                 log.Level `schemaGen:"logLevel" schema:"Уровень логирования"`
-	Scripts                  []ScriptDefinition
+	Scripts                  AllScripts
 	SharedScript             string
 	ScriptExecutionTimeoutMs int `validate:"required"`
+}
+
+type AllScripts struct {
+	CommonScripts []ScriptDefinition
+	CustomScripts []ScriptDefinition
 }
 
 type ScriptDefinition struct {

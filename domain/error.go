@@ -4,4 +4,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-var ErrScriptNotFound = errors.New("script not found")
+var (
+	ErrScriptNotFound    = errors.New("script not found")
+	ErrDuplicateScriptId = errors.New("duplicate script id")
+)
