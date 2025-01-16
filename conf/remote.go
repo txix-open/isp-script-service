@@ -18,8 +18,8 @@ func init() {
 
 type Remote struct {
 	LogLevel                 log.Level          `schemaGen:"logLevel" schema:"Уровень логирования"`
-	Scripts                  []ScriptDefinition `schemaGen:"scripts" schema:"Скрипты"`
-	CustomScripts            []ScriptDefinition `schemaGen:"customScripts" schema:"Кастомные скрипты"`
+	Scripts                  []ScriptDefinition `schema:"Скрипты"`
+	CustomScripts            []ScriptDefinition `schema:"Кастомные скрипты"`
 	SharedScript             string             `schema:"Общий скрипт"`
 	ScriptExecutionTimeoutMs int                `validate:"required" schema:"Время выполнения скрипта"`
 }
