@@ -30,18 +30,16 @@ func (s *MergeScript) TestMergeScriptsDuplicateId() {
 
 	cfg := conf.Remote{
 		ScriptExecutionTimeoutMs: 10000,
-		Scripts: conf.AllScripts{
-			CommonScripts: []conf.ScriptDefinition{
-				{
-					Id:     "1",
-					Script: "return true",
-				},
+		Scripts: []conf.ScriptDefinition{
+			{
+				Id:     "1",
+				Script: "return true",
 			},
-			CustomScripts: []conf.ScriptDefinition{
-				{
-					Id:     "1",
-					Script: "return false",
-				},
+		},
+		CustomScripts: []conf.ScriptDefinition{
+			{
+				Id:     "1",
+				Script: "return false",
 			},
 		},
 	}
@@ -59,22 +57,20 @@ func (s *MergeScript) TestMergeScriptsHappyPath() {
 
 	cfg := conf.Remote{
 		ScriptExecutionTimeoutMs: 10000,
-		Scripts: conf.AllScripts{
-			CommonScripts: []conf.ScriptDefinition{
-				{
-					Id:     "1",
-					Script: "return true",
-				},
-				{
-					Id:     "2",
-					Script: "return false",
-				},
+		Scripts: []conf.ScriptDefinition{
+			{
+				Id:     "1",
+				Script: "return true",
 			},
-			CustomScripts: []conf.ScriptDefinition{
-				{
-					Id:     "3",
-					Script: "return true",
-				},
+			{
+				Id:     "2",
+				Script: "return true",
+			},
+		},
+		CustomScripts: []conf.ScriptDefinition{
+			{
+				Id:     "3",
+				Script: "return false",
 			},
 		},
 	}

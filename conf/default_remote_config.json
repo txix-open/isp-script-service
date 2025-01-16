@@ -1,9 +1,7 @@
 {
   "logLevel": "debug",
-  "scripts": {
-    "commonScripts": [],
-    "customScripts": []
-  },
+  "scripts": [],
+  "customScripts": [],
   "sharedScript": "",
   "scriptExecutionTimeoutMs": 1000
 }

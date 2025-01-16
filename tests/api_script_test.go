@@ -35,19 +35,17 @@ func (s *ApiScript) SetupSuite() {
 
 	cfg := conf.Remote{
 		ScriptExecutionTimeoutMs: 10000,
-		Scripts: conf.AllScripts{
-			CommonScripts: []conf.ScriptDefinition{
-				{
-					Id:     "1",
-					Script: "return true",
-				},
-				{
-					Id:     "2",
-					Script: "return false",
-				},
+		Scripts: []conf.ScriptDefinition{
+			{
+				Id:     "1",
+				Script: "return true",
 			},
-			CustomScripts: []conf.ScriptDefinition{},
+			{
+				Id:     "2",
+				Script: "return false",
+			},
 		},
+		CustomScripts: []conf.ScriptDefinition{},
 	}
 
 	locator := assembly.NewLocator(s.test.Logger(), cli)

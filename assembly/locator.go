@@ -28,7 +28,7 @@ func NewLocator(logger log.Logger, grpcCli *client.Client) Locator {
 }
 
 func (l Locator) Handler(cfg conf.Remote) (*grpc.Mux, error) {
-	scripts, err := MergeScripts(cfg.Scripts)
+	scripts, err := MergeScripts(cfg.Scripts, cfg.CustomScripts)
 	if err != nil {
 		return nil, errors.WithMessage(err, "merge scripts")
 	}
@@ -45,17 +45,17 @@ func (l Locator) Handler(cfg conf.Remote) (*grpc.Mux, error) {
 	return handler, nil
 }
 
-func MergeScripts(allScripts conf.AllScripts) ([]conf.ScriptDefinition, error) {
+func MergeScripts(scripts []conf.ScriptDefinition, customScripts []conf.ScriptDefinition) ([]conf.ScriptDefinition, error) {
 	uniqueScripts := make(map[string]conf.ScriptDefinition)
 
-	for _, script := range allScripts.CommonScripts {
+	for _, script := range scripts {
 		if _, exists := uniqueScripts[script.Id]; exists {
 			return nil, domain.ErrDuplicateScriptId
 		}
 		uniqueScripts[script.Id] = script
 	}
 
-	for _, customScript := range allScripts.CustomScripts {
+	for _, customScript := range customScripts {
 		if _, exists := uniqueScripts[customScript.Id]; exists {
 			return nil, domain.ErrDuplicateScriptId
 		}
