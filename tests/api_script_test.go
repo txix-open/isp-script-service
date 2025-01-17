@@ -45,10 +45,11 @@ func (s *ApiScript) SetupSuite() {
 				Script: "return false",
 			},
 		},
+		CustomScripts: []conf.ScriptDefinition{},
 	}
 
 	locator := assembly.NewLocator(s.test.Logger(), cli)
-	handler := locator.Handler(cfg)
+	handler, _ := locator.Handler(cfg)
 
 	_, s.apiCli = grpct.TestServer(s.test, handler)
 }
