@@ -2,9 +2,10 @@
 package tests_test
 
 import (
-	json2 "github.com/txix-open/isp-kit/json"
 	"strings"
 	"testing"
+
+	json2 "github.com/txix-open/isp-kit/json"
 
 	"github.com/dop251/goja"
 	"github.com/robertkrimen/otto"
@@ -147,7 +148,7 @@ func BenchmarkOtto(b *testing.B) {
 		return
 	}
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		runTime := otto.New()
 		err = runTime.Set("b", recordsExample)
 		if err != nil {
@@ -173,7 +174,7 @@ func BenchmarkOtto(b *testing.B) {
 func BenchmarkGoja(b *testing.B) {
 	prog := goja.MustCompile("test.js", jsScript, false)
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		runTime := goja.New()
 		err := runTime.Set("b", recordsExample)
 		if err != nil {
@@ -200,7 +201,7 @@ func BenchmarkGopherLua(b *testing.B) {
 		panic(err)
 	}
 
-	for i := 0; i < b.N; i++ {
+	for range b.N {
 		l := lua.NewState()
 
 		val, err := json.Decode(l, srcString)
