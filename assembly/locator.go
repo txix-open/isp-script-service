@@ -6,6 +6,7 @@ import (
 	"github.com/txix-open/isp-kit/grpc"
 	"github.com/txix-open/isp-kit/grpc/client"
 	"github.com/txix-open/isp-kit/grpc/endpoint"
+	"github.com/txix-open/isp-kit/grpc/endpoint/grpclog"
 	"github.com/txix-open/isp-kit/log"
 	"isp-script-service/conf"
 	"isp-script-service/controller"
@@ -40,7 +41,7 @@ func (l Locator) Handler(cfg conf.Remote) (*grpc.Mux, error) {
 	c := routes.Controllers{
 		Script: scriptController,
 	}
-	mapper := endpoint.DefaultWrapper(l.logger, endpoint.BodyLogger(l.logger))
+	mapper := endpoint.DefaultWrapper(l.logger, grpclog.Log(l.logger, true))
 	handler := routes.Handler(mapper, c)
 	return handler, nil
 }
