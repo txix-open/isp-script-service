@@ -8,7 +8,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/robertkrimen/otto v0.5.1
 	github.com/stretchr/testify v1.10.0
-	github.com/txix-open/isp-kit v1.54.0
+	github.com/txix-open/isp-kit v1.54.1
 	github.com/txix-open/isp-script v1.3.0
 	github.com/txix-open/jsonschema v1.3.0
 	github.com/txix-open/swag v0.0.0-20250507150849-9c1ff3ea9714

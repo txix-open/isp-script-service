@@ -142,8 +142,8 @@ github.com/txix-open/etp/v4 v4.0.1 h1:5VSYgGsvnMz0tvUHsjVWFETI0qWBTCF1O3ARCHaCIg
 github.com/txix-open/etp/v4 v4.0.1/go.mod h1:FIu7TUDdwcgmtmF6tFTV1bGA2fRY/iVaPQdsGzvqYc8=
 github.com/txix-open/grmq v1.9.0 h1:ArDbJJcFX9zXKEcPf49rp9nYiRyGMJxGKJAxdbSsfaM=
 github.com/txix-open/grmq v1.9.0/go.mod h1:EyFOP17KrwEFOUjR+PH8iH3LCtiN9TSQ8t0ysyk62po=
-github.com/txix-open/isp-kit v1.54.0 h1:+TQjc8SM730/71C+5jCbirVDQf2DVr1kYx5N2YnJUAg=
-github.com/txix-open/isp-kit v1.54.0/go.mod h1:sVUjen989u4yz5SYAZ4LRCQzRfwlU/uJ5ogiU31zmks=
+github.com/txix-open/isp-kit v1.54.1 h1:OY4dQgvhHpRicwpemnoHxs+w2/rMkc19Jf0Nj8QPIeI=
+github.com/txix-open/isp-kit v1.54.1/go.mod h1:sVUjen989u4yz5SYAZ4LRCQzRfwlU/uJ5ogiU31zmks=
 github.com/txix-open/isp-script v1.3.0 h1:hQ29e+aAwlLxgjKpMheo4Sici9t87V/9VQkKwYvJoag=
 github.com/txix-open/isp-script v1.3.0/go.mod h1:DjQ6T6yAjdWCR6SxAN63fE6mS37+NLUKUDS85GTAhlQ=
 github.com/txix-open/jsonschema v1.3.0 h1:XGuOTg22G7PdqfKypjajM20/i5FyGfFYsJKmheebKi4=
