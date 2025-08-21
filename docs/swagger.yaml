@@ -2,8 +2,7 @@ basePath: /api/script
 definitions:
   domain.BatchExecuteByIdsRequest:
     properties:
-      arg:
-        type: object
+      arg: {}
       ids:
         items:
           type: string
@@ -20,8 +19,7 @@ definitions:
     type: object
   domain.ExecuteByIdRequest:
     properties:
-      arg:
-        type: object
+      arg: {}
       id:
         type: string
     required:
@@ -29,8 +27,7 @@ definitions:
     type: object
   domain.ExecuteRequest:
     properties:
-      arg:
-        type: object
+      arg: {}
       script:
         type: string
     required:
@@ -39,8 +36,7 @@ definitions:
   domain.GrpcError:
     properties:
       details:
-        items:
-          type: object
+        items: {}
         type: array
       errorCode:
         type: string
@@ -51,8 +47,7 @@ definitions:
     properties:
       error:
         $ref: '#/definitions/domain.Error'
-      result:
-        type: object
+      result: {}
     type: object
 host: localhost:9000
 info:
